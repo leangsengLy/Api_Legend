@@ -1,0 +1,38 @@
+package legend.example.project_api_legend.Model;
+
+import java.time.LocalTime;
+import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "DBCinema")
+public class LZCinema {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String enName;
+    private String pathImage;
+    private String address;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private String latMap;
+    private String longMap;
+    private String database;
+    private String createBy;
+    private String updateBy;
+    private Date createDate;
+    private Date updateDate;
+}

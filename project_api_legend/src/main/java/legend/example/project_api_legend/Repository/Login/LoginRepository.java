@@ -1,9 +1,17 @@
 package legend.example.project_api_legend.Repository.Login;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import legend.example.project_api_legend.Model.DB_LOGIN;
+import legend.example.project_api_legend.Model.Login;
 
-public interface LoginRepository extends JpaRepository<DB_LOGIN,Long> {
-    
+@Repository
+public interface LoginRepository extends JpaRepository<Login,Long> {
+    @Query("SELECT l FROM Login l WHERE l.email = ?1")
+    Optional<Login> getDataByEmail(String email);
+    Optional<Login> findByEmail(String email);
+    Optional<Login> findByEmailAndPassword(String email,String password);
 }
