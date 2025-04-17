@@ -16,6 +16,7 @@ public class CinemaDto {
     private Long Id;
     private String Name;
     private String Code;
+    private String Localhost;
     private String EnglishName;
     private String PathImage;
     private String Address;

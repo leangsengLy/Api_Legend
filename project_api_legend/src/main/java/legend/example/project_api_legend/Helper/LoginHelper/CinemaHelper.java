@@ -3,6 +3,10 @@ package legend.example.project_api_legend.Helper.LoginHelper;
 
 public class CinemaHelper {
     
+    public static class  StrText {
+        public static final String FolderBranch = "branch";
+        
+    }
     public static class Message {
     }
 
@@ -11,5 +15,7 @@ public class CinemaHelper {
         public final static String Upload = "api/cinema/upload"; 
         public final static String Update = "api/cinema/update"; 
         public final static String Delete = "api/cinema/delete"; 
+        public final static String DeleteImage = "api/cinema/delete_image"; 
+        public final static String UploadImage = "api/cinema/image_upload"; 
    }
 }

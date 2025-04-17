@@ -28,6 +28,7 @@ public class LZCinema {
     private String enName;
     private String code;
     private String pathImage;
+    private String Localhost;
     @Column(nullable=false)
     private String address;
     private LocalTime startTime;
