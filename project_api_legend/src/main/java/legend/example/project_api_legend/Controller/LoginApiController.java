@@ -7,7 +7,7 @@ import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Helper.LoginHelper.LoginHelper;
 import legend.example.project_api_legend.Interface.LoginService;
 import legend.example.project_api_legend.Model.Login;
-import legend.example.project_api_legend.Repository.Login.LoginRepository;
+import legend.example.project_api_legend.Repository.LoginRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.Date;

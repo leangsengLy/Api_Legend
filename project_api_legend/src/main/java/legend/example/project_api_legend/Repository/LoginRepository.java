@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Repository.Login;
+package legend.example.project_api_legend.Repository;
 
 import java.util.Optional;
 
