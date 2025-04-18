@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import java.util.Date;
 
 import legend.example.project_api_legend.DataModel.UploadFileDataModel;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
@@ -27,6 +30,9 @@ public class UploadFileData {
     private String Base64Data;
     public String UploadFile(UploadFileDataModel request){
         try {
+           Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            String formatTime = formatter.format(date);
             // Validate the request
             if (request.getFileName() == null || request.getFileName().isEmpty())  return "File name is required";
             if (request.getBase64Data() == null || request.getBase64Data().isEmpty()) return "File data is required.";
@@ -42,13 +48,13 @@ public class UploadFileData {
             String pathForImage = LZGlobalHelper.Text.pathFolderImage;
             if(request.getFolderName()!=null) pathForImage+="/"+this.folderName+"/";
             // Optional: Save the byte array to a file
-            Path uploadPath = Paths.get(pathForImage + request.getFileName());
+            Path uploadPath = Paths.get(pathForImage + formatTime+"_"+request.getFileName());
             Files.createDirectories(uploadPath.getParent()); // Create directory if it doesn't exist
             Files.write(uploadPath, fileBytes);
+            
+            
             // Optional: Process the byte array (e.g., save to database, manipulate, etc.)
-            String message = "File uploaded successfully: " + request.getFileName() + ", Size: " + fileBytes.length + " bytes";
-
-            return message;
+            return formatTime+"_"+ request.getFileName();
         } catch (IOException e) {
             return "Failed to upload file: " + e.getMessage();
         }

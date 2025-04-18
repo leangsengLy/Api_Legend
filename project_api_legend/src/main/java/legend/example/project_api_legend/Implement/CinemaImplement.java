@@ -1,6 +1,5 @@
 package legend.example.project_api_legend.Implement;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Optional;
 
@@ -11,7 +10,7 @@ import legend.example.project_api_legend.DataModel.Cinema.CinemaDataModel;
 import legend.example.project_api_legend.DataModel.Cinema.CinemaFilterDataModel;
 import legend.example.project_api_legend.Dto.CinemaDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
-import legend.example.project_api_legend.Helper.LoginHelper.CinemaHelper;
+import legend.example.project_api_legend.Helper.CinemaHelper;
 import legend.example.project_api_legend.Interface.CinemaService;
 import legend.example.project_api_legend.Model.LZCinema;
 import legend.example.project_api_legend.Repository.LZCinemaRepository;

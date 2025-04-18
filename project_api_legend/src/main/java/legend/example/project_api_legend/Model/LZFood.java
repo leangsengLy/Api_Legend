@@ -30,7 +30,8 @@ public class LZFood {
     private String englishName;
     private Long qty;
     private Double price;
-
+    private String ImagePath;
+    private String Localhost;
     @Column(nullable = false)
     private String database;
     @Column(nullable = false)
@@ -39,8 +40,6 @@ public class LZFood {
     @Column(nullable = false)
     private Date createDate;
     private Date updateDate;
-
-    @ManyToOne
-    @JoinColumn(name = "cinamaId", referencedColumnName = "id")
-    private LZCinema cinema;
+    @Column(nullable = false)
+    private Long cinemaId;
 }
