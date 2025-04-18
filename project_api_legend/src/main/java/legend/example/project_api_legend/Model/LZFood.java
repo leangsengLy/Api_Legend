@@ -1,44 +1,36 @@
 package legend.example.project_api_legend.Model;
 
-import java.time.LocalTime;
 import java.util.Date;
-import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="\"DBFOOD\"")
 @Entity
-@Table(name = "DBCinema")
-public class LZCinema {
+public class LZFood {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String name;
-    private String enName;
-    private String code;
-    private String pathImage;
-    private String Localhost;
-    @Column(nullable=false)
-    private String address;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private String latMap;
-    private String longMap;
-    
+    private String englishName;
+    private Long qty;
+    private Double price;
+
     @Column(nullable = false)
     private String database;
     @Column(nullable = false)
@@ -47,4 +39,8 @@ public class LZCinema {
     @Column(nullable = false)
     private Date createDate;
     private Date updateDate;
+
+    @ManyToOne
+    @JoinColumn(name = "cinamaId", referencedColumnName = "id")
+    private LZCinema cinema;
 }

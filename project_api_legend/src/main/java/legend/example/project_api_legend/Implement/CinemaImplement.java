@@ -1,6 +1,7 @@
 package legend.example.project_api_legend.Implement;
 
-
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -41,9 +42,11 @@ public class CinemaImplement implements CinemaService  {
     @Override
     public Boolean DeleteImage(Long Id){
         LZCinema find = lzCinemaRepository.findById(Id).get();
+        List<String> fileName = Arrays.asList(find.getPathImage().split("/"));
+        int size = Arrays.asList(find.getPathImage().split("/")).size();
         find.setPathImage(null);
         find.setLocalhost(null);
-        UploadFileData.deleteImage("TestImage.jpg", CinemaHelper.StrText.FolderBranch);
+        UploadFileData.deleteImage(fileName.get(size-1), CinemaHelper.StrText.FolderBranch);
         lzCinemaRepository.save(find);
         return true;
     }
