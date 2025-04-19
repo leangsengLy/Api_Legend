@@ -13,14 +13,12 @@ import legend.example.project_api_legend.Model.LZCinema;
 import legend.example.project_api_legend.Model.LZFood;
 import legend.example.project_api_legend.Repository.LZCinemaRepository;
 import legend.example.project_api_legend.Repository.LZFoodRepository;
-import legend.example.project_api_legend.Specifications.FoodSpecification;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,24 +34,20 @@ public class FoodApiController {
     private LZCinemaRepository lzCinemaRepository;
     private LZFoodRepository lzFoodRepository;
     private FoodService foodService;
-
-    @PostMapping(FoodHelper.Url.List)
-    public List<LZFood> findFoodsByFilter(FoodFilterDataModel filter) {
-        Specification<LZFood> spec = Specification.where(FoodSpecification.hasName(filter.getName()))
-            .and(FoodSpecification.priceBetween(filter.getMinPrice(), filter.getMaxPrice()))
-            .and(FoodSpecification.hasCategory(filter.getCategory()));
-
-        return lzFoodRepository.findAll(spec);
-    }
     
-    // @PostMapping(FoodHelper.Url.List)
-    // public ResponseEntity<?> List(@RequestBody FoodDataModel model) {
-    //    try{
-    //     return new ResponseEntity<>(true,HttpStatus.OK);
-    //    }catch(Exception e){
-    //     return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail("Something went wrong"),HttpStatus.INTERNAL_SERVER_ERROR);
-    //    }
-    // }
+    @PostMapping(FoodHelper.Url.List)
+    public ResponseEntity<?> List(@RequestBody FoodFilterDataModel filter) {
+       try{
+        if(filter.getId()==null)return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail("The field id is required!"),HttpStatus.BAD_REQUEST);
+        Optional<LZCinema> cinema = lzCinemaRepository.findById(filter.getId());
+        if(!cinema.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Cinema not found!"),HttpStatus.BAD_REQUEST);
+        List<FoodDto> result = foodService.List(filter);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+       }catch(Exception e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+       }
+    }
+
     @PostMapping(FoodHelper.Url.Create)
     public ResponseEntity<?> Create(@RequestBody FoodDataModel model) {
        try{
@@ -69,7 +63,7 @@ public class FoodApiController {
                 String fileName = upload.UploadFile(model.getUploadFileDataModel());
                 model.setImagePath(LZGlobalHelper.Text.localUrl+"/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName);
             }catch(Exception ex){
-                return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail("Upload image fail!"),HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
             }
         }
         FoodDto data = foodService.Create(model);
@@ -102,7 +96,7 @@ public class FoodApiController {
         FoodDto data = foodService.Update(model);
         return new ResponseEntity<>(data,HttpStatus.OK);
        }catch(Exception e){
-        return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail("Something went wrong"),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
        }
     }
 
@@ -124,7 +118,7 @@ public class FoodApiController {
         }
         return new ResponseEntity<>(isDeleteSuccess ? "Delete food was successfully!":"",HttpStatus.OK);
        }catch(Exception e){
-        return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail("Something went wrong"),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
        }
     }
 

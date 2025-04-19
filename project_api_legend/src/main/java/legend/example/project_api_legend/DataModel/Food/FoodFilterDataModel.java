@@ -12,7 +12,5 @@ import lombok.Setter;
 public class FoodFilterDataModel {
     private Long Id;
     private String Name;
-    private Double minPrice;
-    private Double maxPrice;
-    private String category;
+    private Double Price;
 }

@@ -1,7 +1,8 @@
 package legend.example.project_api_legend.Implement;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
+import java.util.*;
 import legend.example.project_api_legend.DataModel.Food.FoodDataModel;
 import legend.example.project_api_legend.DataModel.Food.FoodFilterDataModel;
 import legend.example.project_api_legend.Dto.FoodDto;
@@ -9,14 +10,20 @@ import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Interface.FoodService;
 import legend.example.project_api_legend.Model.LZFood;
 import legend.example.project_api_legend.Repository.LZFoodRepository;
+import legend.example.project_api_legend.Specifications.FoodSpecification;
 import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class FoodImplement implements FoodService{
     private LZFoodRepository lzFoodRepository;
     @Override
-    public java.util.List<FoodDto> List(FoodFilterDataModel model) {
-        return null;
+    public List<FoodDto> List(FoodFilterDataModel filter) {
+        Specification<LZFood> listfood = Specification.where(FoodSpecification.ListFood(filter.getId()));
+        if(filter.getPrice()>0){
+            listfood = listfood.and(FoodSpecification.GetPriceBy(filter.getPrice()));
+        } 
+        List<LZFood> result = lzFoodRepository.findAll(listfood);
+        return result.stream().map(val->MappingData(val, result.size())).toList();
     }
     @Override
     public FoodDto Create(FoodDataModel model) {
