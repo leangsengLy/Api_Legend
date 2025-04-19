@@ -11,4 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FoodFilterDataModel {
     private Long Id;
+    private String Name;
+    private Double minPrice;
+    private Double maxPrice;
+    private String category;
 }
