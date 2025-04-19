@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import legend.example.project_api_legend.Data.UploadFileData;
 import legend.example.project_api_legend.DataModel.Food.FoodDataModel;
+import legend.example.project_api_legend.DataModel.Food.FoodFilterDataModel;
 import legend.example.project_api_legend.Dto.FoodDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Helper.FoodHelper;
@@ -12,18 +13,19 @@ import legend.example.project_api_legend.Model.LZCinema;
 import legend.example.project_api_legend.Model.LZFood;
 import legend.example.project_api_legend.Repository.LZCinemaRepository;
 import legend.example.project_api_legend.Repository.LZFoodRepository;
+import legend.example.project_api_legend.Specifications.FoodSpecification;
 import lombok.AllArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -35,6 +37,14 @@ public class FoodApiController {
     private LZFoodRepository lzFoodRepository;
     private FoodService foodService;
 
+    @PostMapping(FoodHelper.Url.List)
+    public List<LZFood> findFoodsByFilter(FoodFilterDataModel filter) {
+        Specification<LZFood> spec = Specification.where(FoodSpecification.hasName(filter.getName()))
+            .and(FoodSpecification.priceBetween(filter.getMinPrice(), filter.getMaxPrice()))
+            .and(FoodSpecification.hasCategory(filter.getCategory()));
+
+        return lzFoodRepository.findAll(spec);
+    }
     
     // @PostMapping(FoodHelper.Url.List)
     // public ResponseEntity<?> List(@RequestBody FoodDataModel model) {
