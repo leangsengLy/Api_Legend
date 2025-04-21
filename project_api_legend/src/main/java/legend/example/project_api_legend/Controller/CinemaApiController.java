@@ -51,7 +51,7 @@ public class CinemaApiController {
                   UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), CinemaHelper.StrText.FolderBranch, model.getUploadFileDataModel().getBase64Data());
                   model.getUploadFileDataModel().setFolderName(CinemaHelper.StrText.FolderBranch);
                   upload.UploadFile(model.getUploadFileDataModel());
-                  model.setPathImage(LZGlobalHelper.Text.localUrl+"/Image/"+CinemaHelper.StrText.FolderBranch+"/"+upload.getFileName());
+                  model.setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+upload.getFileName());
                }catch(Exception ex){
                   return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
                }
@@ -94,7 +94,7 @@ public class CinemaApiController {
                   UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), CinemaHelper.StrText.FolderBranch, model.getUploadFileDataModel().getBase64Data());
                   model.getUploadFileDataModel().setFolderName(CinemaHelper.StrText.FolderBranch);
                   upload.UploadFile(model.getUploadFileDataModel());
-                  find.get().setPathImage(LZGlobalHelper.Text.localUrl+"/Image/"+CinemaHelper.StrText.FolderBranch+"/"+upload.getFileName());
+                  find.get().setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+upload.getFileName());
                   lzCinemaRepository.save(find.get());
                }catch(Exception ex){
                   return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);

@@ -15,4 +15,5 @@ public class FoodSpecification {
             return cb.equal(root.get("price"), price);
         };
     }
+   
 }

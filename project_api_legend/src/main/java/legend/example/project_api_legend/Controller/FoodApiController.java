@@ -61,7 +61,7 @@ public class FoodApiController {
                 UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), FoodHelper.StrText.FolderFood, model.getUploadFileDataModel().getBase64Data());
                 model.getUploadFileDataModel().setFolderName(FoodHelper.StrText.FolderFood);
                 String fileName = upload.UploadFile(model.getUploadFileDataModel());
-                model.setImagePath(LZGlobalHelper.Text.localUrl+"/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName);
+                model.setImagePath("/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName);
             }catch(Exception ex){
                 return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
             }
@@ -88,7 +88,7 @@ public class FoodApiController {
                 UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), FoodHelper.StrText.FolderFood, model.getUploadFileDataModel().getBase64Data());
                 model.getUploadFileDataModel().setFolderName(FoodHelper.StrText.FolderFood);
                 String fileName = upload.UploadFile(model.getUploadFileDataModel());
-                model.setImagePath(LZGlobalHelper.Text.localUrl+"/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName);
+                model.setImagePath("/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName);
             }catch(Exception ex){
                 return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail("Upload image fail!"),HttpStatus.BAD_REQUEST);
             }
@@ -99,6 +99,12 @@ public class FoodApiController {
         return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
        }
     }
+
+    @PostMapping(FoodHelper.Url.ListJoin)
+    public ResponseEntity<?> ListDetail(@RequestBody FoodFilterDataModel filter) {
+        return new ResponseEntity<>(foodService.ListDetail(filter),HttpStatus.OK);
+    }
+    
 
     @GetMapping(FoodHelper.Url.Delete)
     public ResponseEntity<?> Delete(Long Id) {
@@ -121,16 +127,5 @@ public class FoodApiController {
         return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
        }
     }
-
-    // @PostMapping(FoodHelper.Url.CheckCodeExisted)
-    // public ResponseEntity<?> Update(String code,Long Id) {
-    //    try{
-
-    //     return new ResponseEntity<>(true,HttpStatus.OK);
-    //    }catch(Exception e){
-    //     return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail("Something went wrong"),HttpStatus.INTERNAL_SERVER_ERROR);
-    //    }
-    // }
-
     
 }

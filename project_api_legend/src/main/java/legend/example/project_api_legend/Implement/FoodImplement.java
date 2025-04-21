@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import legend.example.project_api_legend.DataModel.Food.FoodDataModel;
 import legend.example.project_api_legend.DataModel.Food.FoodFilterDataModel;
+import legend.example.project_api_legend.Dto.FoodDetailDto;
 import legend.example.project_api_legend.Dto.FoodDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Interface.FoodService;
@@ -12,17 +13,19 @@ import legend.example.project_api_legend.Model.LZFood;
 import legend.example.project_api_legend.Repository.LZFoodRepository;
 import legend.example.project_api_legend.Specifications.FoodSpecification;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 @Service
 @AllArgsConstructor
 public class FoodImplement implements FoodService{
     private LZFoodRepository lzFoodRepository;
     @Override
     public List<FoodDto> List(FoodFilterDataModel filter) {
-        Specification<LZFood> listfood = Specification.where(FoodSpecification.ListFood(filter.getId()));
-        if(filter.getPrice()>0){
+        Specification<LZFood> listfood = Specification.where(FoodSpecification.ListFood(filter.getId())).and(null);
+        if(filter.getPrice()!=null){
             listfood = listfood.and(FoodSpecification.GetPriceBy(filter.getPrice()));
         } 
-        List<LZFood> result = lzFoodRepository.findAll(listfood);
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        List<LZFood> result = lzFoodRepository.findAll(listfood,sort);
         return result.stream().map(val->MappingData(val, result.size())).toList();
     }
     @Override
@@ -61,7 +64,17 @@ public class FoodImplement implements FoodService{
         lzFoodRepository.save(food);
         return MappingData(food,1);
     }
-
+    @Override
+    public List<FoodDetailDto> ListDetail(FoodFilterDataModel filter){
+        List<FoodDetailDto> list =  lzFoodRepository.ListDetail(filter);
+        if(filter.getId() !=null) {
+            list = list.stream().filter(s->s.getFoodId()==filter.getId()).toList();
+        }
+        if(filter.getPrice()!=null){
+            list = list.stream().filter(s->s.getPrice()==filter.getPrice()).toList();
+        }
+        return list;
+    }
     public FoodDto MappingData(LZFood data,Integer RecordCount){
         FoodDto dto = new FoodDto();
         dto.setId(data.getId());

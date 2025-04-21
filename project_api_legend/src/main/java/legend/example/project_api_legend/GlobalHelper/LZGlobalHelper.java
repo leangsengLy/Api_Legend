@@ -9,6 +9,8 @@ public class LZGlobalHelper {
            public final static Date DateNow = new Date();
            public final static String pathFolderImage = "D:\\Ly Zee\\Api_Legend\\project_api_legend\\src\\main\\resources\\static\\Image\\";
            public final static String localUrl="http://localhost:8080";
+           public final static String localUrl_flutter="http://10.0.2.2:8080";
+           public final static String localUrl_realDevice="http://192.168.1.5:8080";
     }
     public static class LZDate {
         public final static Date DateNow = new Date();
