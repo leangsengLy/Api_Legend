@@ -24,7 +24,7 @@ public class CinemaDto {
     private LocalTime EndTime;
     private String LatMap;
     private String LongMap;
-    private Long RecordCount;
+    private int RecordCount;
     private String Database;
     private String CreateBy;
     private String UpdateBy;

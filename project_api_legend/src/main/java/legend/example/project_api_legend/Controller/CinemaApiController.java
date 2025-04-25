@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import legend.example.project_api_legend.Data.UploadFileData;
 import legend.example.project_api_legend.DataModel.Cinema.CinemaDataModel;
+import legend.example.project_api_legend.DataModel.Cinema.CinemaFilterDataModel;
 import legend.example.project_api_legend.Dto.CinemaDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Helper.CinemaHelper;
@@ -21,6 +22,8 @@ import legend.example.project_api_legend.Model.LZCinema;
 import legend.example.project_api_legend.Repository.LZCinemaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 @RestController
@@ -37,6 +40,15 @@ public class CinemaApiController {
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+     }
+     @PostMapping(CinemaHelper.Url.List)
+     public ResponseEntity<?> List(@RequestBody CinemaFilterDataModel filter){
+      try{
+         java.util.List<CinemaDto> list = cinemaService.List(filter);
+         return new ResponseEntity<>(list, HttpStatus.OK);
+      }catch(Exception ex){
+         return new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+      }
      }
 
      @PostMapping(CinemaHelper.Url.Create)
@@ -81,6 +93,18 @@ public class CinemaApiController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
          }
      }
+
+     @GetMapping(CinemaHelper.Url.CheckCode)
+     public ResponseEntity<?> CheckExistedCode(@RequestParam String param) {
+         try{
+            if(param=="" || param==null) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Please input param also."),HttpStatus.BAD_REQUEST);
+            var isExisted = cinemaService.CheckCode(param);
+            return new ResponseEntity<>(isExisted,HttpStatus.OK);
+         }catch(Exception ex){
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+         }
+     }
+     
 
      @PostMapping(CinemaHelper.Url.UploadImage)
      public ResponseEntity<?> UploadImage(@RequestBody CinemaDataModel model) {

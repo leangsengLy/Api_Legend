@@ -22,6 +22,7 @@ public class LZGlobalHelper {
     }
     public static class Message{
         public static StatusMessage DataInvalid = new StatusMessage("error", "Data was invalid!", null);
+        public static StatusMessage Successfuly = new StatusMessage("sucess", "Succsessfuly", null);
         public static StatusMessage SomethingWentWrong = new StatusMessage("error", "Something went wrong!", null);
     }
 }

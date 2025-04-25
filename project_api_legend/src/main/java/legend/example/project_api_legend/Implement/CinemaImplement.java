@@ -1,8 +1,8 @@
 package legend.example.project_api_legend.Implement;
 
 import java.util.*;
-import java.util.Optional;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import legend.example.project_api_legend.Data.UploadFileData;
@@ -14,7 +14,10 @@ import legend.example.project_api_legend.Helper.CinemaHelper;
 import legend.example.project_api_legend.Interface.CinemaService;
 import legend.example.project_api_legend.Model.LZCinema;
 import legend.example.project_api_legend.Repository.LZCinemaRepository;
+import legend.example.project_api_legend.Specifications.CinemaSpecification;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
+
 @Service
 @AllArgsConstructor
 public class CinemaImplement implements CinemaService  {
@@ -26,11 +29,14 @@ public class CinemaImplement implements CinemaService  {
         model.setLocalhost(LZGlobalHelper.Text.localUrl);
         model.setCreateDate(LZGlobalHelper.LZDate.DateNow);
         LZCinema cinema = lzCinemaRepository.save(MapToTable(model));
-        return MappingData(cinema,1L);
+        return MappingData(cinema,1);
     }
     @Override
-    public java.util.List<CinemaDto> List(CinemaFilterDataModel filter) {
-        return null;
+    public List<CinemaDto> List(CinemaFilterDataModel filter) {
+        Specification<LZCinema> list = Specification.where(CinemaSpecification.ListFood(filter.getId())).and(CinemaSpecification.Search(filter.getSearch()));
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        List<LZCinema> result = lzCinemaRepository.findAll(list,sort);
+        return result.stream().map(val->MappingData(val,result.size())).toList();   
     }
 
     @Override
@@ -66,10 +72,10 @@ public class CinemaImplement implements CinemaService  {
         cinema.setUpdateBy(LZGlobalHelper.Text.Admin);
         cinema.setUpdateDate(LZGlobalHelper.LZDate.DateNow);
         lzCinemaRepository.save(cinema);
-        return MappingData(cinema,1L);
+        return MappingData(cinema,1);
     }
 
-    public static CinemaDto MappingData(LZCinema data,Long recordCount){
+    public static CinemaDto MappingData(LZCinema data,int recordCount){
         return new CinemaDto(
             data.getId(),
              data.getName(),

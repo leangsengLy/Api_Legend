@@ -16,6 +16,7 @@ public class CinemaFilterDataModel {
     private String Name;
     private String EnglishName;
     private String Address;
+    private String Search;
     private LocalTime StartTime;
     private LocalTime EndTime;
 }
