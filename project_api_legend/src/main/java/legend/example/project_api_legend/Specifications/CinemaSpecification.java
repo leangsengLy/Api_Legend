@@ -1,10 +1,5 @@
 package legend.example.project_api_legend.Specifications;
-
 import org.springframework.data.jpa.domain.Specification;
-
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import legend.example.project_api_legend.Model.LZCinema;
 
 public class CinemaSpecification {
