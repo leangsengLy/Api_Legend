@@ -2,7 +2,7 @@ package legend.example.project_api_legend.Helper;
 
 public class OfferHelper {
     public static class StrText{
-        public static final String FolderName = "offer";
+        public static final String FolderOffer = "offer";
     }
     public static class  Url {
         public static final String List = "api/offer/list";
