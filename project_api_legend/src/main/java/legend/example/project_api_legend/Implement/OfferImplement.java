@@ -1,5 +1,10 @@
 package legend.example.project_api_legend.Implement;
 
+import java.util.*;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import legend.example.project_api_legend.DataModel.Offer.OfferDataModel;
@@ -9,11 +14,19 @@ import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Interface.OfferService;
 import legend.example.project_api_legend.Model.LZOffer;
 import legend.example.project_api_legend.Repository.OfferRepository;
+import legend.example.project_api_legend.Specifications.OfferSpecification;
 import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class OfferImplement implements OfferService {
     private OfferRepository offerRepository;
+    @Override
+    public List<OfferDto> List(OfferFilterDataModel model) {
+        Specification<LZOffer> all = Specification.where(OfferSpecification.Search(model)).or(OfferSpecification.SearchDetail(model));
+        Sort sort = Sort.by(Direction.DESC,"id");
+        List<LZOffer> list = offerRepository.findAll(all,sort);
+        return list.stream().map((val)->MappingData(val,list.size())).toList();
+    }
     @Override
     public OfferDto Create(OfferDataModel model) {
         LZOffer obj = new LZOffer();
@@ -26,11 +39,7 @@ public class OfferImplement implements OfferService {
         offerRepository.save(obj);
         return MappingData(obj,1);
     }
-    @Override
-    public java.util.List<LZOffer> List(OfferFilterDataModel model) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+  
     @Override
     public OfferDto Update(OfferDataModel model) {
         LZOffer find = offerRepository.findById(model.getId()).get();

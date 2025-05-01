@@ -14,6 +14,7 @@ import lombok.Setter;
 public class OfferFilterDataModel {
     private Long Id;
     private String PathImage;
+    private String Search;
     private String Label;
     private String Detail;
     private String Database;

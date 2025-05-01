@@ -30,7 +30,8 @@ public class OfferApiController {
     @PostMapping(OfferHelper.Url.List)
     public ResponseEntity<?> List(@RequestBody OfferFilterDataModel filter) {
         try{
-            return new ResponseEntity<>(true, HttpStatus.OK);
+            var list = offerService.List(filter);
+            return new ResponseEntity<>(list, HttpStatus.OK);
         }catch(Exception ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
