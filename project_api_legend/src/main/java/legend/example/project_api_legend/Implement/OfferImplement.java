@@ -1,6 +1,8 @@
 package legend.example.project_api_legend.Implement;
 
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -22,10 +24,14 @@ public class OfferImplement implements OfferService {
     private OfferRepository offerRepository;
     @Override
     public List<OfferDto> List(OfferFilterDataModel model) {
-        Specification<LZOffer> all = Specification.where(OfferSpecification.Search(model)).or(OfferSpecification.SearchDetail(model));
+        Specification<LZOffer> all = Specification.where(OfferSpecification.Search(model.getSearch()));
         Sort sort = Sort.by(Direction.DESC,"id");
         List<LZOffer> list = offerRepository.findAll(all,sort);
-        return list.stream().map((val)->MappingData(val,list.size())).toList();
+        if(model.getPages()>0 && model.getRecords()>0){
+           var listOffer = list.stream().skip((model.getPages()-1) * model.getRecords()).limit(model.getRecords()).toList();
+           return listOffer.stream().map((val)->MappingData(val, list.size())).toList();
+        }
+        return list.stream().map((val)->MappingData(val, list.size())).toList();
     }
     @Override
     public OfferDto Create(OfferDataModel model) {

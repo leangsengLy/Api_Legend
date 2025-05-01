@@ -5,20 +5,24 @@ import legend.example.project_api_legend.DataModel.Offer.OfferFilterDataModel;
 import legend.example.project_api_legend.Model.LZOffer;
 
 public class OfferSpecification {
-    public static Specification<LZOffer> Search(OfferFilterDataModel model){
+    public static Specification<LZOffer> Search(String Search ){
         return (root,query,cb)->{
-            if(model.getSearch() ==null){
+            if(Search ==null || Search==""){
                 return cb.conjunction();
             }
-            return cb.like(cb.lower(root.get("label")),"%"+model.getSearch()+"%" );
+            return cb.or(
+                cb.like(cb.lower(root.get("label")),"%"+Search+"%" ),
+                cb.like(cb.lower(root.get("detail")),"%"+Search+"%" )
+            ); 
         };
     }
-    public static Specification<LZOffer> SearchDetail(OfferFilterDataModel model){
+    public static Specification<LZOffer> SearchDetail(String Search ){
         return (root,query,cb)->{
-            if(model.getSearch() ==null){
+            if(Search==null || Search==""){
                 return cb.conjunction();
             }
-            return cb.like(cb.lower(root.get("detail")),"%"+model.getSearch()+"%" );
+            return cb.like(cb.lower(root.get("detail")),"%"+Search+"%" );
         };
     }
+   
 }

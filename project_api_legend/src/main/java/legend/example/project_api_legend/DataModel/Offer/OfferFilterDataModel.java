@@ -17,6 +17,8 @@ public class OfferFilterDataModel {
     private String Search;
     private String Label;
     private String Detail;
+    private int Pages;
+    private int Records;
     private String Database;
     private String CreateBy;
     private Date CreateDate;
