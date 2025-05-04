@@ -62,8 +62,8 @@ public class CinemaApiController {
                try{
                   UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), CinemaHelper.StrText.FolderBranch, model.getUploadFileDataModel().getBase64Data());
                   model.getUploadFileDataModel().setFolderName(CinemaHelper.StrText.FolderBranch);
-                  upload.UploadFile(model.getUploadFileDataModel());
-                  model.setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+upload.getFileName());
+                  String ImagePath =  upload.UploadFile(model.getUploadFileDataModel());
+                  model.setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+ImagePath);
                }catch(Exception ex){
                   return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
                }
