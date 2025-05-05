@@ -1,5 +1,6 @@
 package legend.example.project_api_legend.Implement.Movie;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import legend.example.project_api_legend.DataModel.Movie.MovieTypeDataModel;
@@ -9,7 +10,11 @@ import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Interface.Movie.MovieTypeService;
 import legend.example.project_api_legend.MappingData.MovieTypeMap;
 import legend.example.project_api_legend.Model.LZMovieType;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+
 import legend.example.project_api_legend.Repository.LZMovieTypeRepository;
+import legend.example.project_api_legend.Specifications.MovieTypeSpecification;
 import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
@@ -17,8 +22,15 @@ public class MovieTypeImplement implements MovieTypeService{
     private LZMovieTypeRepository lzMovieTypeRepository;
     @Override
     public java.util.List<MovieTypeDto> List(MovieTypeFilterDataMode filter) {
-        // TODO Auto-generated method stub
-        return null;
+        Specification<LZMovieType> list =  Specification.where(MovieTypeSpecification.Search(filter));
+        Sort sort = Sort.by(Direction.DESC, "id");
+        var types= lzMovieTypeRepository.findAll(list,sort);
+        if(filter.getPages()>0 && filter.getRecords()>0){
+            System.out.println("work here");
+            var skip = types.stream().skip((filter.getPages()-1) * filter.getRecords()).limit(filter.getRecords()).toList();
+            return skip.stream().map(s->MappingData(s,types.size())).toList();
+        }
+        return types.stream().map(s->MappingData(s,types.size())).toList();
     }
     @Override
     public MovieTypeDto Create(MovieTypeDataModel model) {
@@ -26,7 +38,7 @@ public class MovieTypeImplement implements MovieTypeService{
         model.setCreateDate(LZGlobalHelper.LZDate.DateNow);
         model.setDatabase(LZGlobalHelper.Text.GlobalDatabase);
         var data =  lzMovieTypeRepository.save(MovieTypeMap.MapToTable(model));
-        return MappingData(data);
+        return MappingData(data,1);
     }
   
     @Override
@@ -36,14 +48,14 @@ public class MovieTypeImplement implements MovieTypeService{
         data.setEnglishName(model.getEnglishName());
         data.setUpdateBy(LZGlobalHelper.Text.Admin);
         data.setUpdateDate(LZGlobalHelper.LZDate.DateNow);
-        return MappingData(data);
+        return MappingData(data,1);
     }
     @Override
-    public boolean Delete(MovieTypeDataModel model) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean Delete(Long Id) {
+        lzMovieTypeRepository.deleteById(Id);
+        return true;
     }
-    public static MovieTypeDto MappingData(LZMovieType db){
+    public static MovieTypeDto MappingData(LZMovieType db,int recordCount){
         MovieTypeDto data = new MovieTypeDto();
         data.setId(db.getId());
         data.setName(db.getName());
@@ -53,6 +65,7 @@ public class MovieTypeImplement implements MovieTypeService{
         data.setCreateDate(db.getCreateDate());
         data.setUpdateDate(db.getUpdateDate());
         data.setDatabase(db.getDatabase());
+        data.setRecordCount(recordCount);
         return data;
     }
    

@@ -9,5 +9,5 @@ public interface MovieTypeService {
     List<MovieTypeDto> List(MovieTypeFilterDataMode filter);
     MovieTypeDto Create(MovieTypeDataModel model);
     MovieTypeDto Update(MovieTypeDataModel model);
-    boolean Delete(MovieTypeDataModel model);
+    boolean Delete(Long Id);
 }

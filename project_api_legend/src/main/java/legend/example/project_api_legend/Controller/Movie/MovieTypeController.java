@@ -25,8 +25,8 @@ public class MovieTypeController {
     @PostMapping(MovieTypeHelper.URL.List)
     public ResponseEntity<?> List(@RequestBody MovieTypeFilterDataMode filter) {
         try{
-           
-            return  new ResponseEntity<>(true,HttpStatus.OK);
+           var list = movieTypeService.List(filter);
+            return  new ResponseEntity<>(list,HttpStatus.OK);
         }catch(Exception ex){
             return  new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -35,8 +35,6 @@ public class MovieTypeController {
     @PostMapping(MovieTypeHelper.URL.Create)
     public ResponseEntity<?> Create(@RequestBody MovieTypeDataModel model) {
         try{
-            // var fields = MovieTypeHelper.Str.class.getDeclaredFields();
-            // LZGlobalHelper.CheckVerifyStringFieldInClass(fields,model.getName());
             if(model.getName()==null) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Field name is required!"),HttpStatus.BAD_REQUEST);
             MovieTypeDto data = movieTypeService.Create(model);
             return  new ResponseEntity<>(data,HttpStatus.OK);
@@ -62,6 +60,10 @@ public class MovieTypeController {
     @PostMapping(MovieTypeHelper.URL.Delete)
     public ResponseEntity<?> Delete(long Id) {
         try{
+            if(Id<1) return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Please input id!"),HttpStatus.BAD_REQUEST);
+            var find = lzMovieTypeRepository.findById(Id);
+            if(!find.isPresent())return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Movie Type not found!"),HttpStatus.NOT_FOUND);
+            movieTypeService.Delete(Id);
             return  new ResponseEntity<>(true,HttpStatus.OK);
         }catch(Exception ex){
             return  new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
