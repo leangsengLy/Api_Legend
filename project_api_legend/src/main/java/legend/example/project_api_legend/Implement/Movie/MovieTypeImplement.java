@@ -3,11 +3,11 @@ package legend.example.project_api_legend.Implement.Movie;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import legend.example.project_api_legend.DataModel.Movie.MovieTypeDataModel;
-import legend.example.project_api_legend.DataModel.Movie.MovieTypeFilterDataMode;
+import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeDataModel;
+import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeFilterDataMode;
 import legend.example.project_api_legend.Dto.MovieTypeDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
-import legend.example.project_api_legend.Interface.Movie.MovieTypeService;
+import legend.example.project_api_legend.Interface.MovieTypeService;
 import legend.example.project_api_legend.MappingData.MovieTypeMap;
 import legend.example.project_api_legend.Model.LZMovieType;
 import org.springframework.data.domain.Sort;
@@ -48,6 +48,7 @@ public class MovieTypeImplement implements MovieTypeService{
         data.setEnglishName(model.getEnglishName());
         data.setUpdateBy(LZGlobalHelper.Text.Admin);
         data.setUpdateDate(LZGlobalHelper.LZDate.DateNow);
+        lzMovieTypeRepository.save(data);
         return MappingData(data,1);
     }
     @Override

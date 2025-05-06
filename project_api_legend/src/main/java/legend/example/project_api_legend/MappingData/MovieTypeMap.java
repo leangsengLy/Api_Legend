@@ -1,6 +1,6 @@
 package legend.example.project_api_legend.MappingData;
 
-import legend.example.project_api_legend.DataModel.Movie.MovieTypeDataModel;
+import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeDataModel;
 import legend.example.project_api_legend.Model.LZMovieType;
 
 public class MovieTypeMap {

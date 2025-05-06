@@ -1,6 +1,5 @@
-package legend.example.project_api_legend.DataModel.Movie;
+package legend.example.project_api_legend.DataModel.Movie.MovieType;
 
-import java.util.Date;
 
 import legend.example.project_api_legend.DataModel.BaseFilterDataModel;
 import lombok.AllArgsConstructor;

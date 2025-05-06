@@ -2,7 +2,7 @@ package legend.example.project_api_legend.Specifications;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import legend.example.project_api_legend.DataModel.Movie.MovieTypeFilterDataMode;
+import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeFilterDataMode;
 import legend.example.project_api_legend.Model.LZMovieType;
 
 public class MovieTypeSpecification {
@@ -10,8 +10,8 @@ public class MovieTypeSpecification {
         return (root,query,cb)->{
             if(filter.getSearch()==null) return cb.conjunction();
             return cb.or(
-                cb.like(cb.lower(root.get("name")), "%"+filter.getSearch()+"%"),
-                cb.like(cb.lower(root.get("englishName")), "%"+filter.getSearch()+"%")
+                cb.like(cb.lower(root.get("name")), "%"+ filter.getSearch().toLowerCase()+"%"),
+                cb.like(cb.lower(root.get("englishName")), "%"+filter.getSearch().toLowerCase()+"%")
             );
         };
     }

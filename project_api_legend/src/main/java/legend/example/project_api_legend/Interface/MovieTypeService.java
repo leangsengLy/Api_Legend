@@ -1,8 +1,8 @@
-package legend.example.project_api_legend.Interface.Movie;
+package legend.example.project_api_legend.Interface;
 import java.util.*;
 
-import legend.example.project_api_legend.DataModel.Movie.MovieTypeDataModel;
-import legend.example.project_api_legend.DataModel.Movie.MovieTypeFilterDataMode;
+import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeDataModel;
+import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeFilterDataMode;
 import legend.example.project_api_legend.Dto.MovieTypeDto;
 
 public interface MovieTypeService {

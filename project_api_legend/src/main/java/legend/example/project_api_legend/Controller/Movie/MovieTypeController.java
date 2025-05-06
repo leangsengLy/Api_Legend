@@ -2,15 +2,14 @@ package legend.example.project_api_legend.Controller.Movie;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import legend.example.project_api_legend.DataModel.Movie.MovieTypeDataModel;
-import legend.example.project_api_legend.DataModel.Movie.MovieTypeFilterDataMode;
+import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeDataModel;
+import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeFilterDataMode;
 import legend.example.project_api_legend.Dto.MovieTypeDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Helper.MovieTypeHelper;
-import legend.example.project_api_legend.Interface.Movie.MovieTypeService;
+import legend.example.project_api_legend.Interface.MovieTypeService;
 import legend.example.project_api_legend.Repository.LZMovieTypeRepository;
 import lombok.AllArgsConstructor;
-import java.lang.reflect.Field;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
