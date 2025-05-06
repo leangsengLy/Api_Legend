@@ -40,7 +40,5 @@ public class LZMovie {
     private Date createDate;
     private String updateBy;
     private Date updateDate;
-    @Column(nullable = false,name = "\"DATABASE\"")
-    private String database;
 
 }

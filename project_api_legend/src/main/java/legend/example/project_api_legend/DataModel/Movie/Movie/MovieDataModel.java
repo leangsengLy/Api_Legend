@@ -3,6 +3,7 @@ package legend.example.project_api_legend.DataModel.Movie.Movie;
 import java.util.Date;
 
 import legend.example.project_api_legend.DataModel.BaseDataModel;
+import legend.example.project_api_legend.DataModel.UploadFileDataModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,6 @@ public class MovieDataModel extends BaseDataModel {
     private Date ToDate;
     private String UrlYT;
     private String Description;
+    private UploadFileDataModel uploadFileDataModel;
+
 }

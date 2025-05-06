@@ -1,6 +1,9 @@
 package legend.example.project_api_legend.Helper;
 
 public class MovieHelper {
+    public static class Text{
+        public static final String folderMovie = "movie";
+    }
     public static class URL{
         public static final String List = "api/movie/list";
         public static final String Create = "api/movie/create";
