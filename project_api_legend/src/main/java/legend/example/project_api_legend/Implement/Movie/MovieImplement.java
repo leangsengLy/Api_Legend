@@ -30,13 +30,26 @@ public class MovieImplement implements MovieService {
  
     @Override
     public MovieDto Update(MovieDataModel model) {
-        // TODO Auto-generated method stub
-        return null;
+        var findMovie = lzMovieRepository.findById(model.getId()).get();
+        findMovie.setMovieTypeId(model.getMovieTypeId());
+        findMovie.setName(model.getName());
+        findMovie.setEnglishName(model.getEnglishName());
+        findMovie.setDuration(model.getDuration());
+        findMovie.setRelease(model.getRelease());
+        findMovie.setImagePath(model.getImagePath());
+        findMovie.setFromDate(model.getFromDate());
+        findMovie.setToDate(model.getToDate());
+        findMovie.setUrlYoutube(model.getUrlYT());
+        findMovie.setDescription(model.getDescription());
+        findMovie.setUpdateBy(LZGlobalHelper.Text.Admin);
+        findMovie.setCreateDate(LZGlobalHelper.LZDate.DateNow);
+        var data = lzMovieRepository.save(findMovie);
+        return MappingData(data,1);
     }
     @Override
     public boolean Delete(Long Id) {
-        // TODO Auto-generated method stub
-        return false;
+        lzMovieRepository.deleteById(Id);
+        return true;
     }
     public static MovieDto MappingData(LZMovie d,int RecordCount){
         var data = new MovieDto();

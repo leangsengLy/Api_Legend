@@ -10,6 +10,7 @@ import legend.example.project_api_legend.Helper.FoodHelper;
 import legend.example.project_api_legend.Helper.MovieHelper;
 import legend.example.project_api_legend.Implement.Movie.MovieImplement;
 import legend.example.project_api_legend.Interface.MovieService;
+import legend.example.project_api_legend.Repository.LZMovieRepository;
 import legend.example.project_api_legend.Repository.LZMovieTypeRepository;
 import lombok.AllArgsConstructor;
 
@@ -25,6 +26,7 @@ import java.util.*;
 @AllArgsConstructor
 public class MovieApiController {
     private LZMovieTypeRepository lzMovieTypeRepository;
+    private LZMovieRepository lzMovieRepository;
     private MovieService movieService;
     @PostMapping(MovieHelper.URL.List)
     public ResponseEntity<?> List(@RequestBody MovieFilterDataModel filter) {
@@ -70,9 +72,45 @@ public class MovieApiController {
     }
 
     @PostMapping(MovieHelper.URL.Update)
-    public ResponseEntity<?> Update(@RequestBody MovieDataModel filter) {
+    public ResponseEntity<?> Update(@RequestBody MovieDataModel model) {
         try{
-            return  new ResponseEntity<>(true,HttpStatus.OK);
+            List<String> message = new ArrayList<>();
+            if(model.getId()==null) return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field Id is required!"),HttpStatus.BAD_REQUEST);
+            if(model.getMovieTypeId()==null) return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field MoveTypeId is required!"),HttpStatus.BAD_REQUEST);
+            if(model.getName()==null || model.getName()=="") message.add("Name");
+            if(model.getDuration()==null || model.getDuration()<1) message.add("Duration");
+            if(model.getFromDate()==null) message.add("From Date");
+            if(model.getToDate()==null) message.add("To Date");
+            if(message.size()>0){
+                return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail(String.join(",", message)),HttpStatus.BAD_REQUEST);
+            }
+            if(model.getToDate().getTime() < model.getFromDate().getTime()){
+                return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("To date should be smaller than from date!"),HttpStatus.BAD_REQUEST);
+            }
+            var findMovieType = lzMovieTypeRepository.findById(model.getMovieTypeId());
+            if(!findMovieType.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Movie type not found!"),HttpStatus.NOT_FOUND);
+            var findMovie = lzMovieRepository.findById(model.getId());
+            if(!findMovie.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Movie not found!"),HttpStatus.NOT_FOUND);
+            if(model.getUploadFileDataModel()!=null ){
+                if(findMovie.get().getImagePath() ==null || findMovie.get().getImagePath() ==""){
+                    try{
+                        UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), MovieHelper.Text.folderMovie, model.getUploadFileDataModel().getBase64Data());
+                       model.getUploadFileDataModel().setFolderName(MovieHelper.Text.folderMovie);
+                        String fileName = upload.UploadFile(model.getUploadFileDataModel());
+                        model.setImagePath("/Image/"+MovieHelper.Text.folderMovie+"/"+fileName);
+                    }catch(Exception ex){
+                        return  new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+                    }
+                }else{
+                    return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Image already existed!"),HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+                
+            }else { 
+                model.setImagePath(findMovie.get().getImagePath());
+            }
+
+            var list = movieService.Update(model);
+            return  new ResponseEntity<>(list,HttpStatus.OK);
         }catch(Exception ex){
             return  new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -81,7 +119,11 @@ public class MovieApiController {
     @GetMapping(MovieHelper.URL.Delete)
     public ResponseEntity<?> Delete(Long Id) {
         try{
-            return  new ResponseEntity<>(true,HttpStatus.OK);
+            if(Id<1) return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field Id is required!"),HttpStatus.INTERNAL_SERVER_ERROR);
+            var findMovie = lzMovieRepository.findById(Id);
+            if(!findMovie.isPresent()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Movie not found!"),HttpStatus.NOT_FOUND);
+            var isDeleteSuccess = movieService.Delete(Id);
+            return new ResponseEntity<>(isDeleteSuccess,HttpStatus.OK);
         }catch(Exception ex){
             return  new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
