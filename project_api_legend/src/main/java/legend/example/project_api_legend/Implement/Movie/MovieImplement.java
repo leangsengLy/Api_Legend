@@ -1,5 +1,8 @@
 package legend.example.project_api_legend.Implement.Movie;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieDataModel;
@@ -10,6 +13,7 @@ import legend.example.project_api_legend.Interface.MovieService;
 import legend.example.project_api_legend.MappingData.MovieMap;
 import legend.example.project_api_legend.Model.LZMovie;
 import legend.example.project_api_legend.Repository.LZMovieRepository;
+import legend.example.project_api_legend.Specifications.Movie.MovieSpecification;
 import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
@@ -17,8 +21,20 @@ public class MovieImplement implements MovieService {
     private LZMovieRepository lzMovieRepository;
     @Override
     public java.util.List<MovieDto> List(MovieFilterDataModel filter) {
-        // TODO Auto-generated method stub
-        return null;
+        Specification<LZMovie> list = Specification.where(MovieSpecification.Search(filter)).and(MovieSpecification.FromDateToDate(filter));
+        if(filter.getId()!=null) list = list.and(MovieSpecification.getById(filter.getId()));
+        if(filter.getFromDate()!=null && filter.getToDate()!=null) {
+            list = list.and(MovieSpecification.FromDateToDate(filter)).and(MovieSpecification.ToDate(filter));
+        }
+        if(filter.getRelease()!=null) list = list.and(MovieSpecification.ReleaseDate(filter.getRelease()));
+        if(filter.getDuration()!=null) list = list.and(MovieSpecification.Duration(filter.getDuration()));
+        Sort sort = Sort.by(Direction.DESC, "id");
+        var data= lzMovieRepository.findAll(list,sort);
+        if(filter.getRecords()!=null && filter.getPages()!=null){
+           var listRecord = data.stream().skip((filter.getPages()-1) * filter.getRecords()).limit(filter.getRecords()).toList();
+           return listRecord.stream().map(s->MappingData(s, listRecord.size())).toList();
+        }
+        return data.stream().map(s->MappingData(s, data.size())).toList();
     }
     @Override
     public MovieDto Create(MovieDataModel model) {

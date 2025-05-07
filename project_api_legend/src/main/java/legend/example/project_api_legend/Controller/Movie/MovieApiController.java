@@ -31,7 +31,8 @@ public class MovieApiController {
     @PostMapping(MovieHelper.URL.List)
     public ResponseEntity<?> List(@RequestBody MovieFilterDataModel filter) {
         try{
-            return  new ResponseEntity<>(true,HttpStatus.OK);
+            var list = movieService.List(filter);
+            return  new ResponseEntity<>(list,HttpStatus.OK);
         }catch(Exception ex){
             return  new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
