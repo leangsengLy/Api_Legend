@@ -11,4 +11,6 @@ public interface MovieService {
     MovieDto Create(MovieDataModel model);
     MovieDto Update(MovieDataModel model);
     boolean Delete(Long Id);
+    boolean RemoveImage(Long ImagePath);
+    MovieDto UploadImage(MovieDataModel model);
 } 

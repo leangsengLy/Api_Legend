@@ -6,9 +6,7 @@ import legend.example.project_api_legend.Data.UploadFileData;
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieDataModel;
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieFilterDataModel;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
-import legend.example.project_api_legend.Helper.FoodHelper;
 import legend.example.project_api_legend.Helper.MovieHelper;
-import legend.example.project_api_legend.Implement.Movie.MovieImplement;
 import legend.example.project_api_legend.Interface.MovieService;
 import legend.example.project_api_legend.Repository.LZMovieRepository;
 import legend.example.project_api_legend.Repository.LZMovieTypeRepository;
@@ -129,6 +127,21 @@ public class MovieApiController {
             return  new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @GetMapping(MovieHelper.URL.RemoveImage)
+    public ResponseEntity<?> RemoveImage(Long Id) {
+        try{
+            if(Id<1) return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field Id is required!"),HttpStatus.INTERNAL_SERVER_ERROR);
+            var findMovie = lzMovieRepository.findById(Id);
+            var isSuccess = false;
+            if(!findMovie.isPresent()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Movie not found!"),HttpStatus.NOT_FOUND);
+            if(findMovie.get().getImagePath()!=null){
+                movieService.RemoveImage(Id);
+                isSuccess = true;
+            }
+            return new ResponseEntity<>(!isSuccess?LZGlobalHelper.Message.DataInvalid.setDetail("currently you didn't have image!"):"remove success",HttpStatus.OK);
+        }catch(Exception ex){
+            return  new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 }

@@ -1,14 +1,21 @@
 package legend.example.project_api_legend.Implement.Movie;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import legend.example.project_api_legend.Data.UploadFileData;
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieDataModel;
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieFilterDataModel;
 import legend.example.project_api_legend.Dto.MovieDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
+import legend.example.project_api_legend.Helper.FoodHelper;
+import legend.example.project_api_legend.Helper.MovieHelper;
+import legend.example.project_api_legend.Helper.MovieTypeHelper;
 import legend.example.project_api_legend.Interface.MovieService;
 import legend.example.project_api_legend.MappingData.MovieMap;
 import legend.example.project_api_legend.Model.LZMovie;
@@ -30,7 +37,7 @@ public class MovieImplement implements MovieService {
         if(filter.getDuration()!=null) list = list.and(MovieSpecification.Duration(filter.getDuration()));
         Sort sort = Sort.by(Direction.DESC, "id");
         var data= lzMovieRepository.findAll(list,sort);
-        if(filter.getRecords()!=null && filter.getPages()!=null){
+        if(filter.getRecords()!=null && filter.getPages()!=null && filter.getPages()>0 && filter.getRecords()>0){
            var listRecord = data.stream().skip((filter.getPages()-1) * filter.getRecords()).limit(filter.getRecords()).toList();
            return listRecord.stream().map(s->MappingData(s, listRecord.size())).toList();
         }
@@ -61,6 +68,20 @@ public class MovieImplement implements MovieService {
         findMovie.setCreateDate(LZGlobalHelper.LZDate.DateNow);
         var data = lzMovieRepository.save(findMovie);
         return MappingData(data,1);
+    }
+    @Override
+    public boolean RemoveImage(Long Id) {
+        var findMovie = lzMovieRepository.findById(Id).get();
+        List<String> fileName = Arrays.asList(findMovie.getImagePath().split("/"));
+        var LastIndex = fileName.size()-1;
+        UploadFileData.deleteImage(fileName.get(LastIndex), MovieHelper.Text.folderMovie);
+        findMovie.setImagePath(null);
+        lzMovieRepository.save(findMovie);
+        return true;
+    }
+    @Override
+    public MovieDto UploadImage(MovieDataModel model) {
+        return new MovieDto();
     }
     @Override
     public boolean Delete(Long Id) {
