@@ -143,5 +143,33 @@ public class MovieApiController {
             return  new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PostMapping(MovieHelper.URL.UploadImage)
+    public ResponseEntity<?> RemoveImage(@RequestBody MovieDataModel model) {
+        try{
+            var isSuccess = false;
+            var find = lzMovieRepository.findById(model.getId());
+            if(!find.isPresent()){
+                return new ResponseEntity<>(!isSuccess?LZGlobalHelper.Message.DataInvalid.setDetail("The Movie not found!"):"remove success",HttpStatus.NOT_FOUND);
+            }
+            
+            if(model.getUploadFileDataModel()!=null && find.get().getImagePath()==null){
+                
+                try{
+                    UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), MovieHelper.Text.folderMovie, model.getUploadFileDataModel().getBase64Data());
+                    model.getUploadFileDataModel().setFolderName(MovieHelper.Text.folderMovie);
+                    String fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    model.setImagePath("/Image/"+MovieHelper.Text.folderMovie+"/"+fileName);
+                    movieService.UploadImage(model);
+                    isSuccess=true;
+                }catch(Exception ex){
+                    return  new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+                }
+            }
+           
+            return new ResponseEntity<>(!isSuccess?LZGlobalHelper.Message.DataInvalid.setDetail("Currently you have image already!"):"add new image success",HttpStatus.OK);
+        }catch(Exception ex){
+            return  new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 }

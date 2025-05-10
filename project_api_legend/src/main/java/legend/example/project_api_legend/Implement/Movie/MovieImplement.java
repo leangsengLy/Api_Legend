@@ -80,8 +80,11 @@ public class MovieImplement implements MovieService {
         return true;
     }
     @Override
-    public MovieDto UploadImage(MovieDataModel model) {
-        return new MovieDto();
+    public Boolean UploadImage(MovieDataModel model) {
+        var find = lzMovieRepository.findById(model.getId()).get();
+        find.setImagePath(model.getImagePath());
+        lzMovieRepository.save(find);
+        return true;
     }
     @Override
     public boolean Delete(Long Id) {
