@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -82,7 +83,7 @@ public class OfferApiController {
                 return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
            }
     }
-    @PostMapping(OfferHelper.Url.Delete)
+    @GetMapping(OfferHelper.Url.Delete)
     public ResponseEntity<?> Delete(Long Id) {
         try{
             if(Id<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field id is required!"),HttpStatus.BAD_REQUEST);
@@ -91,9 +92,12 @@ public class OfferApiController {
             var isDeleteSuccess = offerService.Delete(Id);
             if(isDeleteSuccess) {
                 try{
-                    List<String> fileName = Arrays.asList(data.get().getPathImage().split("/"));
-                    Integer LastIndex = fileName.size()-1;
-                    UploadFileData.deleteImage(fileName.get(LastIndex), FoodHelper.StrText.FolderFood);
+                    if(data.get().getPathImage()!=null){
+                        List<String> fileName = Arrays.asList(data.get().getPathImage().split("/"));
+                        Integer LastIndex = fileName.size()-1;
+                        UploadFileData.deleteImage(fileName.get(LastIndex), FoodHelper.StrText.FolderFood);
+                    }
+                    
                 }catch(Exception ex){
                     return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
                 }

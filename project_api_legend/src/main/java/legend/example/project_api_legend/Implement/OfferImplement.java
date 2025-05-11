@@ -68,6 +68,7 @@ public class OfferImplement implements OfferService {
         data.setCreateBy(obj.getCreateBy());
         data.setCreateDate(obj.getCreateDate());
         data.setUpdateBy(obj.getUpdateBy());
+        data.setUpdateDate(obj.getUpdateDate());
         data.setRecordCount(RecordCount);
         return data;
     }
