@@ -82,7 +82,7 @@ public class FoodImplement implements FoodService{
         dto.setEnglishName(data.getEnglishName());
         dto.setQty(data.getQty());
         dto.setPrice(data.getPrice());
-        dto.setImagePath(data.getImagePath());
+        dto.setPathImage(data.getImagePath());
         dto.setLocalhost(data.getLocalhost());
         dto.setDatabase(data.getDatabase());
         dto.setCreateBy(data.getCreateBy());

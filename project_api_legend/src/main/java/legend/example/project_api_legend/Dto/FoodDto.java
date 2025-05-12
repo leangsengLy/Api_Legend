@@ -8,21 +8,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
-@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class FoodDto {
-    private Long Id;
-    private String Name;
-    private String EnglishName;
-    private Long Qty;
-    private Double Price;
-    private String ImagePath;
-    private String Localhost;
-    private String Database;
-    private String CreateBy;
-    private String UpdateBy;
-    private Integer RecordCount;
-    private Date CreateDate;
-    private Date UpdateDate;
+    public Long Id;
+    public String Name;
+    public String EnglishName;
+    public Long Qty;
+    public Double Price;
+    public String PathImage;
+    public String Localhost;
+    public String Database;
+    public String CreateBy;
+    public String UpdateBy;
+    public Integer RecordCount;
+    public Date CreateDate;
+    public Date UpdateDate;
 }
