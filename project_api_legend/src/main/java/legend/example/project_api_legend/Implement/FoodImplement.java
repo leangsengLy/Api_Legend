@@ -20,7 +20,10 @@ public class FoodImplement implements FoodService{
     private LZFoodRepository lzFoodRepository;
     @Override
     public List<FoodDto> List(FoodFilterDataModel filter) {
-        Specification<LZFood> listfood = Specification.where(FoodSpecification.ListFood(filter.getId())).and(null);
+        Specification<LZFood> listfood = Specification.where(null);
+        if(filter.getId()!=null){
+             listfood = listfood.and(FoodSpecification.ListFood(filter.getId()));
+        }
         if(filter.getPrice()!=null){
             listfood = listfood.and(FoodSpecification.GetPriceBy(filter.getPrice()));
         } 

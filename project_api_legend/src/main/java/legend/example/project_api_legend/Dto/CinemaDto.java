@@ -9,25 +9,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
-@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class CinemaDto {
-    private Long Id;
-    private String Name;
-    private String Code;
-    private String Localhost;
-    private String EnglishName;
-    private String PathImage;
-    private String Address;
-    private LocalTime StartTime;
-    private LocalTime EndTime;
-    private String LatMap;
-    private String LongMap;
-    private int RecordCount;
-    private String Database;
-    private String CreateBy;
-    private String UpdateBy;
-    private Date UpdateDate;
-    private Date CreateDate;
+    public Long Id;
+    public String Name;
+    public String Code;
+    public String Localhost;
+    public String EnglishName;
+    public String PathImage;
+    public String Address;
+    public LocalTime StartTime;
+    public LocalTime EndTime;
+    public String LatMap;
+    public String LongMap;
+    public int RecordCount;
+    public String Database;
+    public String CreateBy;
+    public String UpdateBy;
+    public Date UpdateDate;
+    public Date CreateDate;
 }

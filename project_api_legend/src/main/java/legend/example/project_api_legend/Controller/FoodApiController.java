@@ -39,7 +39,7 @@ public class FoodApiController {
     public ResponseEntity<?> List(@RequestBody FoodFilterDataModel filter) {
        try{
         // if(filter.getId()==null) return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail("The field id is required!"),HttpStatus.BAD_REQUEST);
-        if(filter.getId()>0 && filter.getId()!=null){
+        if(filter.getId()!=null){
             Optional<LZCinema> cinema = lzCinemaRepository.findById(filter.getId());
             if(!cinema.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Cinema not found!"),HttpStatus.BAD_REQUEST);
         }

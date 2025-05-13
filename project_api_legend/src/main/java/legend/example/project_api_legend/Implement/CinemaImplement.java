@@ -76,27 +76,34 @@ public class CinemaImplement implements CinemaService  {
     }
 
     public static CinemaDto MappingData(LZCinema data,int recordCount){
-        return new CinemaDto(
-            data.getId(),
-             data.getName(),
-             data.getCode(),
-             data.getLocalhost(),
-              data.getEnName(),
-               data.getPathImage(),
-                data.getAddress(),
-                 data.getStartTime(),
-                  data.getEndTime(),
-                   data.getLatMap(),
-                    data.getLongMap(),
-                    recordCount,
-                      data.getDatabase(),
-                       data.getCreateBy(),
-                        data.getUpdateBy(),
-                         data.getUpdateDate(),
-                          data.getCreateDate()
-                          );
+        var obj = new CinemaDto();
+            obj.setId(data.getId());
+            obj.setName(data.getName());
+            obj.setCode(data.getCode());
+            obj.setLocalhost(data.getLocalhost());
+            obj.setEnglishName(data.getEnName());
+            obj.setPathImage(data.getPathImage());
+            obj.setAddress(data.getAddress());
+            obj.setStartTime(data.getStartTime());
+            obj.setEndTime(data.getEndTime());
+            obj.setLatMap(data.getLatMap());
+            obj.setLongMap(null);
+            obj.setRecordCount(recordCount);
+            obj.setDatabase(data.getDatabase());
+            obj.setCreateBy(data.getCreateBy());
+            obj.setUpdateBy(data.getUpdateBy());
+            obj.setUpdateDate(data.getUpdateDate());
+            obj.setCreateDate(data.getCreateDate());
+        return obj;
+        
+        
     }
     public static LZCinema MapToTable(CinemaDataModel data){
         return new LZCinema(data.getId(), data.getName(), data.getEnglishName(),data.getCode(),data.getPathImage(),data.getLocalhost(), data.getAddress(), data.getStartTime(), data.getEndTime(), data.getLatMap(), data.getLongMap(), data.getDatabase(), data.getCreateby(), data.getUpdateBy(), data.getCreateDate(), data.getUpdateDate());
+    }
+    @Override
+    public Boolean Delete(Long Id) {
+        lzCinemaRepository.deleteById(Id);
+        return true;
     }
 }

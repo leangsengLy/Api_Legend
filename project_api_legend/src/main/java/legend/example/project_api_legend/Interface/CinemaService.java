@@ -12,4 +12,5 @@ public interface CinemaService {
     CinemaDto Update(CinemaDataModel model);
     Boolean CheckCode(String code);
     Boolean DeleteImage(Long Id);
+    Boolean Delete(Long Id);
 } 
