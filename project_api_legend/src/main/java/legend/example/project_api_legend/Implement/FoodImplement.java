@@ -27,6 +27,9 @@ public class FoodImplement implements FoodService{
         if(filter.getPrice()!=null){
             listfood = listfood.and(FoodSpecification.GetPriceBy(filter.getPrice()));
         } 
+        if(filter.getSearch()!=null){
+            listfood = listfood.and(FoodSpecification.SearchFood(filter.getSearch()));
+        }
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         List<LZFood> result = lzFoodRepository.findAll(listfood,sort);
         return result.stream().map(val->MappingData(val, result.size())).toList();

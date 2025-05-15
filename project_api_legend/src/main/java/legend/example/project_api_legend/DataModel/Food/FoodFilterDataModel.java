@@ -1,16 +1,13 @@
 package legend.example.project_api_legend.DataModel.Food;
 
-import lombok.AllArgsConstructor;
+import legend.example.project_api_legend.DataModel.BaseFilterDataModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-public class FoodFilterDataModel {
-    private Long Id;
-    private String Name;
-    private Double Price;
+public class FoodFilterDataModel extends BaseFilterDataModel {
+    public Long Id;
+    public String Name;
+    public Double Price;
 }

@@ -25,7 +25,7 @@ public class MovieTypeImplement implements MovieTypeService{
         Specification<LZMovieType> list =  Specification.where(MovieTypeSpecification.Search(filter));
         Sort sort = Sort.by(Direction.DESC, "id");
         var types= lzMovieTypeRepository.findAll(list,sort);
-        if(filter.getPages()>0 && filter.getRecords()>0){
+        if(filter.getPages()!=null && filter.getRecords()!=null){
             System.out.println("work here");
             var skip = types.stream().skip((filter.getPages()-1) * filter.getRecords()).limit(filter.getRecords()).toList();
             return skip.stream().map(s->MappingData(s,types.size())).toList();
