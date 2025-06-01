@@ -7,7 +7,9 @@ import legend.example.project_api_legend.DataModel.Food.FoodDataModel;
 import legend.example.project_api_legend.DataModel.Food.FoodFilterDataModel;
 import legend.example.project_api_legend.Dto.FoodDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
+import legend.example.project_api_legend.GlobalHelper.StatusMessage;
 import legend.example.project_api_legend.Helper.FoodHelper;
+import legend.example.project_api_legend.Helper.MovieHelper;
 import legend.example.project_api_legend.Interface.FoodService;
 import legend.example.project_api_legend.Model.LZCinema;
 import legend.example.project_api_legend.Model.LZFood;
@@ -62,8 +64,10 @@ public class FoodApiController {
             try{
                 UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), FoodHelper.StrText.FolderFood, model.getUploadFileDataModel().getBase64Data());
                 model.getUploadFileDataModel().setFolderName(FoodHelper.StrText.FolderFood);
-                String fileName = upload.UploadFile(model.getUploadFileDataModel());
-                model.setImagePath("/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName);
+                 StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setImagePath("/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName.getDetail());
+                    }
             }catch(Exception ex){
                 return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
             }
@@ -89,8 +93,13 @@ public class FoodApiController {
             try{
                 UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), FoodHelper.StrText.FolderFood, model.getUploadFileDataModel().getBase64Data());
                 model.getUploadFileDataModel().setFolderName(FoodHelper.StrText.FolderFood);
-                String fileName = upload.UploadFile(model.getUploadFileDataModel());
-                model.setImagePath("/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName);
+                // String fileName = upload.UploadFile(model.getUploadFileDataModel());
+                // model.setImagePath("/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName);
+
+                 StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setImagePath("/Image/"+FoodHelper.StrText.FolderFood+"/"+fileName.getDetail());
+                    }
             }catch(Exception ex){
                 return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail("Upload image fail!"),HttpStatus.BAD_REQUEST);
             }

@@ -13,9 +13,7 @@ import legend.example.project_api_legend.DataModel.Movie.Movie.MovieDataModel;
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieFilterDataModel;
 import legend.example.project_api_legend.Dto.MovieDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
-import legend.example.project_api_legend.Helper.FoodHelper;
 import legend.example.project_api_legend.Helper.MovieHelper;
-import legend.example.project_api_legend.Helper.MovieTypeHelper;
 import legend.example.project_api_legend.Interface.MovieService;
 import legend.example.project_api_legend.MappingData.MovieMap;
 import legend.example.project_api_legend.Model.LZMovie;
@@ -37,10 +35,10 @@ public class MovieImplement implements MovieService {
         if(filter.getDuration()!=null) list = list.and(MovieSpecification.Duration(filter.getDuration()));
         Sort sort = Sort.by(Direction.DESC, "id");
         var data= lzMovieRepository.findAll(list,sort);
-        if(filter.getRecords()!=null && filter.getPages()!=null && filter.getPages()>0 && filter.getRecords()>0){
-           var listRecord = data.stream().skip((filter.getPages()-1) * filter.getRecords()).limit(filter.getRecords()).toList();
-           return listRecord.stream().map(s->MappingData(s, listRecord.size())).toList();
-        }
+        // if(filter.getRecords()!=null && filter.getPages()!=null && filter.getPages()>0 && filter.getRecords()>0){
+        //    var listRecord = data.stream().skip((filter.getPages()-1) * filter.getRecords()).limit(filter.getRecords()).toList();
+        //    return listRecord.stream().map(s->MappingData(s, data.size())).toList();
+        // }
         return data.stream().map(s->MappingData(s, data.size())).toList();
     }
     @Override
@@ -59,7 +57,9 @@ public class MovieImplement implements MovieService {
         findMovie.setEnglishName(model.getEnglishName());
         findMovie.setDuration(model.getDuration());
         findMovie.setRelease(model.getRelease());
-        findMovie.setImagePath(model.getImagePath());
+        if(model.getUploadFileDataModel().getBase64Data()!=null){
+            findMovie.setImagePath(model.getImagePath());
+        }
         findMovie.setFromDate(model.getFromDate());
         findMovie.setToDate(model.getToDate());
         findMovie.setUrlYoutube(model.getUrlYT());

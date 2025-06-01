@@ -6,6 +6,7 @@ import legend.example.project_api_legend.Data.UploadFileData;
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieDataModel;
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieFilterDataModel;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
+import legend.example.project_api_legend.GlobalHelper.StatusMessage;
 import legend.example.project_api_legend.Helper.MovieHelper;
 import legend.example.project_api_legend.Interface.MovieService;
 import legend.example.project_api_legend.Repository.LZMovieRepository;
@@ -57,8 +58,10 @@ public class MovieApiController {
                 try{
                     UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), MovieHelper.Text.folderMovie, model.getUploadFileDataModel().getBase64Data());
                    model.getUploadFileDataModel().setFolderName(MovieHelper.Text.folderMovie);
-                    String fileName = upload.UploadFile(model.getUploadFileDataModel());
-                    model.setImagePath("/Image/"+MovieHelper.Text.folderMovie+"/"+fileName);
+                    StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setImagePath("/Image/"+MovieHelper.Text.folderMovie+"/"+fileName.getDetail());
+                    }
                 }catch(Exception ex){
                     return  new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
                 }
@@ -90,18 +93,20 @@ public class MovieApiController {
             if(!findMovieType.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Movie type not found!"),HttpStatus.NOT_FOUND);
             var findMovie = lzMovieRepository.findById(model.getId());
             if(!findMovie.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Movie not found!"),HttpStatus.NOT_FOUND);
-            if(model.getUploadFileDataModel()!=null ){
+            if(model.getUploadFileDataModel().getBase64Data()!=null ){
                 if(findMovie.get().getImagePath() ==null || findMovie.get().getImagePath() ==""){
                     try{
                         UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), MovieHelper.Text.folderMovie, model.getUploadFileDataModel().getBase64Data());
                        model.getUploadFileDataModel().setFolderName(MovieHelper.Text.folderMovie);
-                        String fileName = upload.UploadFile(model.getUploadFileDataModel());
-                        model.setImagePath("/Image/"+MovieHelper.Text.folderMovie+"/"+fileName);
+                        StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setImagePath("/Image/"+MovieHelper.Text.folderMovie+"/"+fileName.getDetail());
+                    }
                     }catch(Exception ex){
                         return  new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
                     }
                 }else{
-                    return  new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Image already existed!"),HttpStatus.INTERNAL_SERVER_ERROR);
+                     return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Image already existed!"),HttpStatus.INTERNAL_SERVER_ERROR);
                 }
                 
             }else { 
@@ -157,8 +162,9 @@ public class MovieApiController {
                 try{
                     UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), MovieHelper.Text.folderMovie, model.getUploadFileDataModel().getBase64Data());
                     model.getUploadFileDataModel().setFolderName(MovieHelper.Text.folderMovie);
-                    String fileName = upload.UploadFile(model.getUploadFileDataModel());
-                    model.setImagePath("/Image/"+MovieHelper.Text.folderMovie+"/"+fileName);
+                    StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    System.out.println(fileName);
+                    // model.setImagePath("/Image/"+MovieHelper.Text.folderMovie+"/"+fileName);
                     movieService.UploadImage(model);
                     isSuccess=true;
                 }catch(Exception ex){

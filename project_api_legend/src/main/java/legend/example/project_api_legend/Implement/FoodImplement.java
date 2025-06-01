@@ -62,6 +62,9 @@ public class FoodImplement implements FoodService{
         LZFood food = lzFoodRepository.findById(model.getId()).get();
         food.setName(model.getName());
         food.setEnglishName(model.getEnglishName());
+        if(model.getImagePath() != null && !model.getImagePath().isEmpty()) {
+            food.setImagePath(model.getImagePath());
+        }
         food.setUpdateBy(LZGlobalHelper.Text.Admin);
         food.setUpdateDate(LZGlobalHelper.Text.DateNow);
         food.setQty(model.getQty());

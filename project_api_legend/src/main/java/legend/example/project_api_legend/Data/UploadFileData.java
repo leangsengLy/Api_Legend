@@ -14,6 +14,8 @@ import java.util.Date;
 
 import legend.example.project_api_legend.DataModel.UploadFileDataModel;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
+import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper.Message;
+import legend.example.project_api_legend.GlobalHelper.StatusMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,21 +30,21 @@ public class UploadFileData {
     private String fileType;
     private String folderName;
     private String Base64Data;
-    public String UploadFile(UploadFileDataModel request){
+    public StatusMessage UploadFile(UploadFileDataModel request){
         try {
            Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String formatTime = formatter.format(date);
             // Validate the request
-            if (request.getFileName() == null || request.getFileName().isEmpty())  return "File name is required";
-            if (request.getBase64Data() == null || request.getBase64Data().isEmpty()) return "File data is required.";
+            if (request.getFileName() == null || request.getFileName().isEmpty())  return LZGlobalHelper.Message.DataInvalid.setDetail("File name is required.");
+            if (request.getBase64Data() == null || request.getBase64Data().isEmpty()) return LZGlobalHelper.Message.DataInvalid.setDetail("File data is required."); 
 
             // Decode Base64 string to byte array
             byte[] fileBytes;
             try {
                 fileBytes = Base64.getDecoder().decode(request.getBase64Data());
             } catch (IllegalArgumentException e) {
-                return "Invalid Base64 data.";
+                return LZGlobalHelper.Message.DataInvalid.setDetail("Invalid Base64 data."); 
             }
             System.out.println(request.getFolderName());
             String pathForImage = LZGlobalHelper.Text.pathFolderImage;
@@ -54,9 +56,9 @@ public class UploadFileData {
             
             
             // Optional: Process the byte array (e.g., save to database, manipulate, etc.)
-            return formatTime+"_"+ request.getFileName();
+            return LZGlobalHelper.Message.Successfuly.setDetail(formatTime+"_"+ request.getFileName());
         } catch (IOException e) {
-            return "Failed to upload file: " + e.getMessage();
+            return LZGlobalHelper.Message.DataInvalid.setDetail("Failed to upload file: "+e.getMessage()); 
         }
     }
 

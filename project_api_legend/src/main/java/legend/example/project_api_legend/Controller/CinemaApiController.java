@@ -18,8 +18,10 @@ import legend.example.project_api_legend.DataModel.Cinema.CinemaDataModel;
 import legend.example.project_api_legend.DataModel.Cinema.CinemaFilterDataModel;
 import legend.example.project_api_legend.Dto.CinemaDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
+import legend.example.project_api_legend.GlobalHelper.StatusMessage;
 import legend.example.project_api_legend.Helper.CinemaHelper;
 import legend.example.project_api_legend.Helper.FoodHelper;
+import legend.example.project_api_legend.Helper.MovieHelper;
 import legend.example.project_api_legend.Interface.CinemaService;
 import legend.example.project_api_legend.Model.LZCinema;
 import legend.example.project_api_legend.Model.LZFood;
@@ -66,8 +68,10 @@ public class CinemaApiController {
                try{
                   UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), CinemaHelper.StrText.FolderBranch, model.getUploadFileDataModel().getBase64Data());
                   model.getUploadFileDataModel().setFolderName(CinemaHelper.StrText.FolderBranch);
-                  String ImagePath =  upload.UploadFile(model.getUploadFileDataModel());
-                  model.setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+ImagePath);
+                   StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+fileName.getDetail());
+                    }
                }catch(Exception ex){
                   return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
                }
@@ -89,8 +93,10 @@ public class CinemaApiController {
                try{
                   UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), CinemaHelper.StrText.FolderBranch, model.getUploadFileDataModel().getBase64Data());
                   model.getUploadFileDataModel().setFolderName(CinemaHelper.StrText.FolderBranch);
-                  String ImagePath =  upload.UploadFile(model.getUploadFileDataModel());
-                  model.setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+ImagePath);
+                   StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+fileName.getDetail());
+                    }
                }catch(Exception ex){
                   return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
                }
@@ -146,8 +152,10 @@ public class CinemaApiController {
                try{
                   UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), CinemaHelper.StrText.FolderBranch, model.getUploadFileDataModel().getBase64Data());
                   model.getUploadFileDataModel().setFolderName(CinemaHelper.StrText.FolderBranch);
-                  upload.UploadFile(model.getUploadFileDataModel());
-                  find.get().setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+upload.getFileName());
+                   StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        find.get().setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+fileName.getDetail());
+                    }
                   lzCinemaRepository.save(find.get());
                }catch(Exception ex){
                   return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);

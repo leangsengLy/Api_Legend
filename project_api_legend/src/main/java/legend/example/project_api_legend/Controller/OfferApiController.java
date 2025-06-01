@@ -7,6 +7,7 @@ import legend.example.project_api_legend.DataModel.Offer.OfferDataModel;
 import legend.example.project_api_legend.DataModel.Offer.OfferFilterDataModel;
 import legend.example.project_api_legend.Dto.OfferDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
+import legend.example.project_api_legend.GlobalHelper.StatusMessage;
 import legend.example.project_api_legend.Helper.FoodHelper;
 import legend.example.project_api_legend.Helper.OfferHelper;
 import legend.example.project_api_legend.Interface.OfferService;
@@ -46,9 +47,13 @@ public class OfferApiController {
         if(model.getUploadFileDataModel()!=null){
             try{
                 UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), OfferHelper.StrText.FolderOffer, model.getUploadFileDataModel().getBase64Data());
-                model.getUploadFileDataModel().setFolderName(FoodHelper.StrText.FolderFood);
-                String fileName = upload.UploadFile(model.getUploadFileDataModel());
-                model.setPathImage("/Image/"+OfferHelper.StrText.FolderOffer+"/"+fileName);
+                model.getUploadFileDataModel().setFolderName(OfferHelper.StrText.FolderOffer);
+                // String fileName = upload.UploadFile(model.getUploadFileDataModel());
+                // model.setPathImage("/Image/"+OfferHelper.StrText.FolderOffer+"/"+fileName);
+                  StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setPathImage("/Image/"+OfferHelper.StrText.FolderOffer+"/"+fileName.getDetail());
+                    }
             }catch(Exception ex){
                 return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
             }
@@ -71,8 +76,10 @@ public class OfferApiController {
                     try{
                         UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), OfferHelper.StrText.FolderOffer, model.getUploadFileDataModel().getBase64Data());
                         model.getUploadFileDataModel().setFolderName(OfferHelper.StrText.FolderOffer);
-                        String fileName = upload.UploadFile(model.getUploadFileDataModel());
-                        model.setPathImage("/Image/"+OfferHelper.StrText.FolderOffer+"/"+fileName);
+                         StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setPathImage("/Image/"+OfferHelper.StrText.FolderOffer+"/"+fileName.getDetail());
+                    }
                     }catch(Exception ex){
                         return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
                     }

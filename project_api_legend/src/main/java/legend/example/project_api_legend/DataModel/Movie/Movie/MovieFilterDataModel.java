@@ -21,4 +21,7 @@ public class MovieFilterDataModel extends BaseFilterDataModel {
     private Date ToDate;
     private String Name;
     private String EnglishName;
+    public String Search;
+    public Long Pages;
+    public Long Records;
 }
