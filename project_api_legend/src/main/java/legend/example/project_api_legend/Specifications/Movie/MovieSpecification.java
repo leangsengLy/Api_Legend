@@ -47,4 +47,9 @@ public class MovieSpecification {
             return cb.equal(root.get("duration"), duration);
         };
     }
+     public static Specification<LZMovie> MovieTypeId(Long Id){
+        return (root,query,cb)->{
+            return cb.equal(root.get("movieTypeId"), Id);
+        };
+    }
 }

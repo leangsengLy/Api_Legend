@@ -33,6 +33,7 @@ public class MovieImplement implements MovieService {
         }
         if(filter.getRelease()!=null) list = list.and(MovieSpecification.ReleaseDate(filter.getRelease()));
         if(filter.getDuration()!=null) list = list.and(MovieSpecification.Duration(filter.getDuration()));
+        if(filter.getMovieTypeId() > 0) list = list.and(MovieSpecification.MovieTypeId(filter.getMovieTypeId()));
         Sort sort = Sort.by(Direction.DESC, "id");
         var data= lzMovieRepository.findAll(list,sort);
         // if(filter.getRecords()!=null && filter.getPages()!=null && filter.getPages()>0 && filter.getRecords()>0){
