@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Helper;
+package legend.example.project_api_legend.Helper.LZModuleMedia;
 
 public class OfferHelper {
     public static class StrText{

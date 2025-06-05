@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Dto;
+package legend.example.project_api_legend.Dto.LZModuleMedia;
 
 import java.util.Date;
 

@@ -7,7 +7,7 @@ import legend.example.project_api_legend.DataModel.Movie.Movie.MovieDataModel;
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieFilterDataModel;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.GlobalHelper.StatusMessage;
-import legend.example.project_api_legend.Helper.MovieHelper;
+import legend.example.project_api_legend.Helper.LZModuleSetting.MovieHelper;
 import legend.example.project_api_legend.Interface.MovieService;
 import legend.example.project_api_legend.Repository.LZMovieRepository;
 import legend.example.project_api_legend.Repository.LZMovieTypeRepository;

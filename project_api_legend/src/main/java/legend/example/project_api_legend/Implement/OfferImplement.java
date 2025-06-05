@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import legend.example.project_api_legend.DataModel.Offer.OfferDataModel;
 import legend.example.project_api_legend.DataModel.Offer.OfferFilterDataModel;
-import legend.example.project_api_legend.Dto.OfferDto;
+import legend.example.project_api_legend.Dto.LZModuleMedia.OfferDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Interface.OfferService;
 import legend.example.project_api_legend.Model.LZOffer;

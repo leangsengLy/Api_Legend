@@ -1,5 +1,6 @@
-package legend.example.project_api_legend.Dto;
+package legend.example.project_api_legend.Dto.LZModuleCinema;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -9,18 +10,22 @@ import lombok.Setter;
 
 @Setter
 @NoArgsConstructor
-public class FoodDto {
+public class CinemaDto {
     public Long Id;
     public String Name;
-    public String EnglishName;
-    public Long Qty;
-    public Double Price;
-    public String PathImage;
+    public String Code;
     public String Localhost;
+    public String EnglishName;
+    public String PathImage;
+    public String Address;
+    public LocalTime StartTime;
+    public LocalTime EndTime;
+    public String LatMap;
+    public String LongMap;
+    public int RecordCount;
     public String Database;
     public String CreateBy;
     public String UpdateBy;
-    public Integer RecordCount;
-    public Date CreateDate;
     public Date UpdateDate;
+    public Date CreateDate;
 }

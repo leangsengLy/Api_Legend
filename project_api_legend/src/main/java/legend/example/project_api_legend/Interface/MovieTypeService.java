@@ -3,7 +3,7 @@ import java.util.*;
 
 import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeDataModel;
 import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeFilterDataMode;
-import legend.example.project_api_legend.Dto.MovieTypeDto;
+import legend.example.project_api_legend.Dto.LZModuleSetting.MovieTypeDto;
 
 public interface MovieTypeService {
     List<MovieTypeDto> List(MovieTypeFilterDataMode filter);

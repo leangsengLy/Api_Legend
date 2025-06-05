@@ -2,7 +2,8 @@ package legend.example.project_api_legend.Interface;
 
 import legend.example.project_api_legend.DataModel.Offer.OfferDataModel;
 import legend.example.project_api_legend.DataModel.Offer.OfferFilterDataModel;
-import legend.example.project_api_legend.Dto.OfferDto;
+import legend.example.project_api_legend.Dto.LZModuleMedia.OfferDto;
+
 import java.util.*;
 public interface OfferService {
     OfferDto Create(OfferDataModel model);

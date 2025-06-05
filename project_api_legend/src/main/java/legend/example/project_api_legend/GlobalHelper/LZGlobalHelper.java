@@ -6,7 +6,7 @@ import java.util.Date;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import legend.example.project_api_legend.Helper.MovieTypeHelper;
+import legend.example.project_api_legend.Helper.LZModuleSetting.MovieTypeHelper;
 
 public class LZGlobalHelper {
     public static class Text {
@@ -28,6 +28,7 @@ public class LZGlobalHelper {
     }
     public static class Message{
         public static StatusMessage DataInvalid = new StatusMessage("error", "Data was invalid!", null);
+        public static StatusMessage DataNotFound = new StatusMessage("error", "Data was not found!", null);
         public static StatusMessage Successfuly = new StatusMessage("sucess", "Succsessfuly", null);
         public static StatusMessage SomethingWentWrong = new StatusMessage("error", "Something went wrong!", null);
     }

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import legend.example.project_api_legend.DataModel.Food.FoodFilterDataModel;
-import legend.example.project_api_legend.Dto.FoodDetailDto;
+import legend.example.project_api_legend.Dto.LZModuleFood.FoodDetailDto;
 import legend.example.project_api_legend.Model.LZFood;
 import java.util.List;
 
