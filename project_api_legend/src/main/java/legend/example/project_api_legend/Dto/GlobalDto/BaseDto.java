@@ -2,7 +2,6 @@ package legend.example.project_api_legend.Dto.GlobalDto;
 
 import java.util.Date;
 
-import lombok.Getter;
 import lombok.Setter;
 @Setter
 public class BaseDto {

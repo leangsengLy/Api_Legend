@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Implement.LZModuleSetting;
+package legend.example.project_api_legend.Implement.Setting;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
