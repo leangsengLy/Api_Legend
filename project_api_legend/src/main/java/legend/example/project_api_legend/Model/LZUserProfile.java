@@ -29,16 +29,12 @@ public class LZUserProfile {
     private String DESCRIPTION;
     @Column( nullable = false, length = 10)
     private String PHONE1;
-    @Column( length = 10)
-    private String PHONE2;
     @Column(nullable = false)
     private String MAJOR;
     @Column( length = 500)
     private String EXPERIENCE_DESC;
     @Column( nullable = false,length = 500)
     private String ADDRESS;
-     @Column(nullable = false, length = 500)
-    private String EN_ADDRESS;
     @Column( nullable = false)
     private String CREATED_BY;
      @Column( nullable = false)

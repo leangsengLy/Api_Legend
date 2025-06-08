@@ -6,6 +6,7 @@ import legend.example.project_api_legend.Dto.LoginDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Helper.LoginHelper.LoginHelper;
 import legend.example.project_api_legend.Interface.LoginService;
+import legend.example.project_api_legend.MappingData.LoginDataMapping;
 import legend.example.project_api_legend.Model.Login;
 import legend.example.project_api_legend.Repository.LoginRepository;
 import lombok.AllArgsConstructor;
@@ -53,6 +54,12 @@ public class LoginApiController {
         try{
             if(user.getEmail()=="" 	|| user.getPassword()=="") return new ResponseEntity<>(LoginHelper.Message.InvalidUserPassword,HttpStatus.BAD_REQUEST);
                 boolean isHaveCheckEmail = loginService.CheckPasswordNEmail(user.getEmail(), user.getPassword());
+                if(isHaveCheckEmail){
+                  Optional<Login>  login = loginRepository.getDataByEmail(user.getEmail());
+                  var result = login.get();
+                  var data = LoginDataMapping.LoginMapToLoginDto(result);
+                  return new ResponseEntity<>(data,HttpStatus.OK);
+                }
                 return new ResponseEntity<>(isHaveCheckEmail,HttpStatus.OK);
             }catch(Exception ex){
                 return new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);

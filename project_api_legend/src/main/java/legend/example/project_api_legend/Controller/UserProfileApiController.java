@@ -2,15 +2,11 @@ package legend.example.project_api_legend.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import legend.example.project_api_legend.Data.UploadFileData;
-import legend.example.project_api_legend.DataModel.UserProfile.UserProfileDataModel;
-import legend.example.project_api_legend.Dto.LZModuleCinema.CinemaDto;
+import legend.example.project_api_legend.DataModel.UserProfile.UserProfileFilterDataModel;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
-import legend.example.project_api_legend.GlobalHelper.StatusMessage;
-import legend.example.project_api_legend.Helper.LZModuleCinema.CinemaHelper;
 import legend.example.project_api_legend.Helper.LZModuleSetting.UserProfileHelper;
 import legend.example.project_api_legend.Interface.UserProfileService;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,47 +18,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@NoArgsConstructor
+@AllArgsConstructor
 public class UserProfileApiController {
     private UserProfileService userProfileService;
-    // @PostMapping(UserProfileHelper.URL.List)
-    // public ResponseEntity<?> List(@RequestBody UserProfileDataModel model ) {
-    //    try{
-    //         if(model.getName()=="" || model.getAddress()=="") return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The field name  is required."),HttpStatus.BAD_REQUEST);
-    //         if(model.getPhone1()==null || model.getPhone1()=="") return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The field Phone1  is required."),HttpStatus.BAD_REQUEST);
-    //         if(model.getAddress()==null || model.getAddress()=="") return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The field Address  is required."),HttpStatus.BAD_REQUEST);
-    //         if(model.getLoginId() < 1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The field loginId not found!"),HttpStatus.BAD_REQUEST);
-    //         if(model.getUploadFileDataModel()!=null){
-    //             var folder = model.get
-    //            try{
-    //               UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), UserProfileHelper.Folder, model.getUploadFileDataModel().getBase64Data());
-    //               model.getUploadFileDataModel().setFolderName(CinemaHelper.StrText.FolderBranch);
-    //                StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
-    //                 if(fileName.getStatus()!="error"){
-    //                     model.setPathImage("/Image/"+CinemaHelper.StrText.FolderBranch+"/"+fileName.getDetail());
-    //                 }
-    //            }catch(Exception ex){
-    //               return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
-    //            }
-    //         }
-    //         return new ResponseEntity<>(true,HttpStatus.OK);
-    //      }catch(Exception e){
-    //         return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-    //      }
-    // }
+    @PostMapping(UserProfileHelper.URL.List)
+    public ResponseEntity<?> Info(@RequestBody UserProfileFilterDataModel filter ) {
+       try{
+            if(filter.getLoginId()<1 || filter.getLoginId()==null) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field LoginId is required!"),HttpStatus.BAD_REQUEST);
+            var res = userProfileService.getUserByLoginId(filter.getLoginId());
+            return new ResponseEntity<>(res,HttpStatus.OK);
+         }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+         }
+    }
 
     @GetMapping(UserProfileHelper.URL.UpdateName)
-    public ResponseEntity<?> UpdateName(@RequestParam String name,Long loginId) {
+    public ResponseEntity<?> UpdateName(@RequestParam String name,@RequestParam Long Id) {
         try{
             if(name=="" || name.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field name is required!"),HttpStatus.BAD_REQUEST);
-            var res = userProfileService.UpdateName(name,loginId);
+            var res = userProfileService.UpdateName(name,Id);
             return new ResponseEntity<>(res,HttpStatus.OK);
         }catch(Exception ex){
             return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping(UserProfileHelper.URL.UpdatePhone)
-    public ResponseEntity<?> UpdatePhone(@RequestParam String phone,Long loginId) {
+    public ResponseEntity<?> UpdatePhone(@RequestParam String phone,@RequestParam Long loginId) {
         try{
             if(phone=="" || phone.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field phone is required!"),HttpStatus.BAD_REQUEST);
             if(loginId<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field loginId is required!"),HttpStatus.BAD_REQUEST);
@@ -73,18 +54,18 @@ public class UserProfileApiController {
         }
     }
     @GetMapping(UserProfileHelper.URL.UpdateDesc)
-    public ResponseEntity<?> UpdateDescription(@RequestParam String Description,Long loginId) {
+    public ResponseEntity<?> UpdateDescription(@RequestParam String Description,@RequestParam Long Id) {
         try{
             if(Description=="" || Description.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field Description is required!"),HttpStatus.BAD_REQUEST);
-            if(loginId<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field loginId is required!"),HttpStatus.BAD_REQUEST);
-            var res = userProfileService.UpdateDescription(Description,loginId);
+            if(Id<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field Id is required!"),HttpStatus.BAD_REQUEST);
+            var res = userProfileService.UpdateDescription(Description,Id);
             return new ResponseEntity<>(res,HttpStatus.OK);
         }catch(Exception ex){
             return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping(UserProfileHelper.URL.UpdateAddress)
-    public ResponseEntity<?> UpdateAddress(@RequestParam String address,Long loginId) {
+    public ResponseEntity<?> UpdateAddress(@RequestParam String address,@RequestParam Long loginId) {
         try{
             if(address=="" || address.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field address is required!"),HttpStatus.BAD_REQUEST);
             if(loginId<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field loginId is required!"),HttpStatus.BAD_REQUEST);
@@ -95,7 +76,7 @@ public class UserProfileApiController {
         }
     }
     @GetMapping(UserProfileHelper.URL.UpdateCareer)
-    public ResponseEntity<?> UpdateCareer(@RequestParam String major,Long loginId) {
+    public ResponseEntity<?> UpdateCareer(@RequestParam String major,@RequestParam Long loginId) {
         try{
             if(major=="" || major.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field major is required!"),HttpStatus.BAD_REQUEST);
             if(loginId<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field loginId is required!"),HttpStatus.BAD_REQUEST);
@@ -106,7 +87,7 @@ public class UserProfileApiController {
         }
     }
     @GetMapping(UserProfileHelper.URL.UpdateCodeProgram)
-    public ResponseEntity<?> UpdateCodeProgram(@RequestParam String codeProgram,Long loginId) {
+    public ResponseEntity<?> UpdateCodeProgram(@RequestParam String codeProgram,@RequestParam Long loginId) {
         try{
             if(codeProgram=="" || codeProgram.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field codeProgram is required!"),HttpStatus.BAD_REQUEST);
             if(loginId<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field loginId is required!"),HttpStatus.BAD_REQUEST);
@@ -117,7 +98,7 @@ public class UserProfileApiController {
         }
     }
     @GetMapping(UserProfileHelper.URL.UpdateEnglishName)
-    public ResponseEntity<?> UpdateEnglishName(@RequestParam String englishname,Long loginId) {
+    public ResponseEntity<?> UpdateEnglishName(@RequestParam String englishname,@RequestParam Long loginId) {
         try{
             if(englishname=="" || englishname.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field Engish Name is required!"),HttpStatus.BAD_REQUEST);
             if(loginId<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field loginId is required!"),HttpStatus.BAD_REQUEST);
@@ -127,17 +108,5 @@ public class UserProfileApiController {
             return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping(UserProfileHelper.URL.UpdateEnglishAddress)
-    public ResponseEntity<?> getMethodName(@RequestParam String enAddress,Long loginId) {
-        try{
-            if(enAddress=="" || enAddress.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field English Address is required!"),HttpStatus.BAD_REQUEST);
-            if(loginId<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field loginId is required!"),HttpStatus.BAD_REQUEST);
-            var res = userProfileService.UpdateEnglishAddress(enAddress,loginId);
-            return new ResponseEntity<>(res,HttpStatus.OK);
-        }catch(Exception ex){
-            return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
     
 }

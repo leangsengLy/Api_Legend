@@ -10,14 +10,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
-@Getter
 public class LoginDto {
-    private Long Id;
-    private String Email;
-    private String Password;
-    private String CreateBy;
-    private Date CreateDate;
-    private String UpdateBy;
-    private Date UpdateDate;
-    private String Database;
+    public Long Id;
+    public String Email;
+    public String Password;
+    public String CreateBy;
+    public Date CreateDate;
+    public String UpdateBy;
+    public Date UpdateDate;
+    public String Database;
 }
