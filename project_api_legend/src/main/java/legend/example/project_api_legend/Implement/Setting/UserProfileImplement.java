@@ -3,6 +3,7 @@ package legend.example.project_api_legend.Implement.Setting;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import legend.example.project_api_legend.DataModel.UserProfile.UserProfileDataModel;
 import legend.example.project_api_legend.Dto.LZModuleSetting.UserProfileDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Interface.UserProfileService;
@@ -37,6 +38,12 @@ public class UserProfileImplement implements UserProfileService  {
            return UserProfileMapping.MappingDto(data.get(0), 1);
         }
 
+        public String UploadImage(UserProfileDataModel model){
+             var data = lZUserProfileRepository.findById(model.getId()).get();
+            data.setPROFILE_IMG_PATH(model.getProfileImagePath());
+            lZUserProfileRepository.save(data);
+            return data.getPROFILE_IMG_PATH();
+        }
         public String UpdateName(String name,Long Id) {
            var data = lZUserProfileRepository.findById(Id).get();
            data.setNAME(name);

@@ -1,5 +1,6 @@
 package legend.example.project_api_legend.Interface;
 
+import legend.example.project_api_legend.DataModel.UserProfile.UserProfileDataModel;
 import legend.example.project_api_legend.Dto.LZModuleSetting.UserProfileDto;
 
 public interface UserProfileService {
@@ -11,5 +12,6 @@ public interface UserProfileService {
     String UpdateDescription(String desciption,Long Id);
     String UpdateCareer(String career,Long Id);
     String UpdateCodeProgram(String codeProgram,Long Id);
+    String UploadImage(UserProfileDataModel model);
     UserProfileDto getUserByLoginId(Long Id);
 }

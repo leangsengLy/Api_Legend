@@ -12,10 +12,10 @@ public class UserProfileHelper {
         public static final String UpdateEnglishAddress = "api/user_profile/update_en_address";
         public static final String UpdatePhone = "api/user_profile/update_phone";
         public static final String DeleteImage = "api/user_profile/delete_image";
-        public static final String UplaodImage = "api/user_profile/upload_image";
+        public static final String UploadImage = "api/user_profile/upload_image";
     }
     public static class Folder{
-        public static final String Cover = "user_profile/cover";
-        public static final String Profile = "user_profile/profile";
+        public static final String Cover = "cover";
+        public static final String Profile = "profile";
     }
 }

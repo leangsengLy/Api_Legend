@@ -2,10 +2,16 @@ package legend.example.project_api_legend.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import legend.example.project_api_legend.Data.UploadFileData;
+import legend.example.project_api_legend.DataModel.UserProfile.UserProfileDataModel;
 import legend.example.project_api_legend.DataModel.UserProfile.UserProfileFilterDataModel;
+import legend.example.project_api_legend.Dto.LZModuleFood.FoodDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
+import legend.example.project_api_legend.GlobalHelper.StatusMessage;
+import legend.example.project_api_legend.Helper.LZModuleFood.FoodHelper;
 import legend.example.project_api_legend.Helper.LZModuleSetting.UserProfileHelper;
 import legend.example.project_api_legend.Interface.UserProfileService;
+import legend.example.project_api_legend.Repository.LZUserProfileRepository;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -21,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @AllArgsConstructor
 public class UserProfileApiController {
     private UserProfileService userProfileService;
+    private LZUserProfileRepository lzUserProfileRepository;
     @PostMapping(UserProfileHelper.URL.List)
     public ResponseEntity<?> Info(@RequestBody UserProfileFilterDataModel filter ) {
        try{
@@ -38,6 +45,31 @@ public class UserProfileApiController {
             if(name=="" || name.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field name is required!"),HttpStatus.BAD_REQUEST);
             var res = userProfileService.UpdateName(name,Id);
             return new ResponseEntity<>(res,HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(UserProfileHelper.URL.UploadImage)
+    public ResponseEntity<?> UploadImage(@RequestBody UserProfileDataModel model ) {
+        try{
+             if(model.getId()<1 || model.getId()==null) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field LoginId is required!"),HttpStatus.BAD_REQUEST);
+             var find = lzUserProfileRepository.findById(model.getId());
+             if(!find.isPresent()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("User profile not found!"),HttpStatus.BAD_REQUEST);
+            if(model.getUploadFileDataModel()!=null){
+            try{
+                UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), UserProfileHelper.Folder.Profile, model.getUploadFileDataModel().getBase64Data());
+                model.getUploadFileDataModel().setFolderName(UserProfileHelper.Folder.Profile);
+                 StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setProfileImagePath("/Image/"+UserProfileHelper.Folder.Profile+"/"+fileName.getDetail());
+                    }
+            }catch(Exception ex){
+                return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+            }
+        }
+        String data = userProfileService.UploadImage(model);
+        return new ResponseEntity<>(data,HttpStatus.OK);
         }catch(Exception ex){
             return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
