@@ -43,32 +43,23 @@ public class UserProfileImplement implements UserProfileService  {
             lZUserProfileRepository.save(data);
             return data.getNAME();
         }
-        public String UpdateAddress(String address,Long loginId) {
-            var db = new LZUserProfile(); 
-             db.setLOGIN_ID(loginId);
-             db.setUPDATED_BY(LZGlobalHelper.Text.Admin);
-            db.setUPDATED_DATE(LZGlobalHelper.Text.DateNow);
-            db.setADDRESS(address);
-            lZUserProfileRepository.save(db);
-            return db.getADDRESS();
+        public String UpdateAddress(String address,Long Id) {
+             var data = lZUserProfileRepository.findById(Id).get();
+            data.setADDRESS(address);
+            lZUserProfileRepository.save(data);
+            return data.getADDRESS();
         }
-        public String UpdateCareer(String career,Long loginId) {
-            var db = new LZUserProfile(); 
-             db.setLOGIN_ID(loginId);
-             db.setUPDATED_BY(LZGlobalHelper.Text.Admin);
-            db.setUPDATED_DATE(LZGlobalHelper.Text.DateNow);
-            db.setMAJOR(career);
-            lZUserProfileRepository.save(db);
-            return db.getMAJOR();
+        public String UpdateCareer(String career,Long Id) {
+            var data = lZUserProfileRepository.findById(Id).get();
+            data.setMAJOR(career);
+            lZUserProfileRepository.save(data);
+            return data.getMAJOR();
         }
-        public String UpdateCodeProgram(String codeProgram,Long loginId) {
-            var db = new LZUserProfile(); 
-               db.setLOGIN_ID(loginId);
-             db.setUPDATED_BY(LZGlobalHelper.Text.Admin);
-            db.setUPDATED_DATE(LZGlobalHelper.Text.DateNow);
-            db.setEXPERIENCE_DESC(codeProgram);
-            lZUserProfileRepository.save(db);
-            return db.getEXPERIENCE_DESC();
+        public String UpdateCodeProgram(String codeProgram,Long Id) {
+            var data = lZUserProfileRepository.findById(Id).get();
+            data.setEXPERIENCE_DESC(codeProgram);
+            lZUserProfileRepository.save(data);
+            return data.getEXPERIENCE_DESC();
         }
         public String UpdateDescription(String desciption,Long Id) {
             var data = lZUserProfileRepository.findById(Id).get();
@@ -77,23 +68,17 @@ public class UserProfileImplement implements UserProfileService  {
             return data.getDESCRIPTION();
         }
        
-        public String UpdateEnglishName(String englishName,Long loginId) {
-            var db = new LZUserProfile(); 
-             db.setLOGIN_ID(loginId);
-             db.setUPDATED_BY(LZGlobalHelper.Text.Admin);
-            db.setUPDATED_DATE(LZGlobalHelper.Text.DateNow);
-            db.setEN_NAME(englishName);
-            lZUserProfileRepository.save(db);
-            return db.getEN_NAME();
+        public String UpdateEnglishName(String englishName,Long Id) {
+            var data = lZUserProfileRepository.findById(Id).get();
+            data.setEN_NAME(englishName);
+            lZUserProfileRepository.save(data);
+            return data.getEN_NAME();
         }
-        public String UpdatePhone(String phone,Long loginId) {
-            var db = new LZUserProfile(); 
-             db.setLOGIN_ID(loginId);
-            db.setUPDATED_BY(LZGlobalHelper.Text.Admin);
-            db.setUPDATED_DATE(LZGlobalHelper.Text.DateNow);
-            db.setPHONE1(phone);
-            lZUserProfileRepository.save(db);
-            return db.getPHONE1();
+        public String UpdatePhone(String phone,Long Id) {
+            var data = lZUserProfileRepository.findById(Id).get();
+            data.setPHONE1(phone);
+            lZUserProfileRepository.save(data);
+            return data.getPHONE1();
         }
 
 }
