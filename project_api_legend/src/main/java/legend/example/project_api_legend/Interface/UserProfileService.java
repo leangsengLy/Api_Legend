@@ -14,4 +14,5 @@ public interface UserProfileService {
     String UpdateCodeProgram(String codeProgram,Long Id);
     String UploadImage(UserProfileDataModel model);
     UserProfileDto getUserByLoginId(Long Id);
+    String DeleteImage(Long Id);
 }

@@ -74,6 +74,18 @@ public class UserProfileApiController {
             return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+     @GetMapping(UserProfileHelper.URL.DeleteImage)
+    public ResponseEntity<?> DeleteImage(@RequestParam Long Id) {
+        try{
+            if(Id<1 || Id==null) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field LoginId is required!"),HttpStatus.BAD_REQUEST);
+            var find = lzUserProfileRepository.findById(Id);
+             if(!find.isPresent()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("User profile not found!"),HttpStatus.BAD_REQUEST);
+              String data = userProfileService.DeleteImage(Id);
+            return new ResponseEntity<>(data,HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping(UserProfileHelper.URL.UpdatePhone)
     public ResponseEntity<?> UpdatePhone(@RequestParam String phone,@RequestParam Long Id) {
         try{

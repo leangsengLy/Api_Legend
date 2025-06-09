@@ -1,11 +1,17 @@
 package legend.example.project_api_legend.Implement.Setting;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import legend.example.project_api_legend.Data.UploadFileData;
 import legend.example.project_api_legend.DataModel.UserProfile.UserProfileDataModel;
 import legend.example.project_api_legend.Dto.LZModuleSetting.UserProfileDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
+import legend.example.project_api_legend.Helper.LZModuleFood.FoodHelper;
+import legend.example.project_api_legend.Helper.LZModuleSetting.UserProfileHelper;
 import legend.example.project_api_legend.Interface.UserProfileService;
 import legend.example.project_api_legend.MappingData.LZModuleSetting.UserProfileMapping;
 import legend.example.project_api_legend.Model.LZUserProfile;
@@ -43,6 +49,17 @@ public class UserProfileImplement implements UserProfileService  {
             data.setPROFILE_IMG_PATH(model.getProfileImagePath());
             lZUserProfileRepository.save(data);
             return data.getPROFILE_IMG_PATH();
+        }
+        public String DeleteImage(Long Id){
+            var profile = lZUserProfileRepository.findById(Id).get();
+            if(profile.getPROFILE_IMG_PATH()!=""){
+                List<String> fileName = Arrays.asList(profile.getPROFILE_IMG_PATH().split("/"));
+                Integer LastIndex = fileName.size()-1;
+                UploadFileData.deleteImage(fileName.get(LastIndex), UserProfileHelper.Folder.Profile);
+            }
+              profile.setPROFILE_IMG_PATH(null);
+              lZUserProfileRepository.save(profile);
+            return "Delete image successfuly";
         }
         public String UpdateName(String name,Long Id) {
            var data = lZUserProfileRepository.findById(Id).get();
