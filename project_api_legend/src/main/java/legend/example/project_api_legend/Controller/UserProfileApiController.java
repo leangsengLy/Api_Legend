@@ -57,12 +57,13 @@ public class UserProfileApiController {
              var find = lzUserProfileRepository.findById(model.getId());
              if(!find.isPresent()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("User profile not found!"),HttpStatus.BAD_REQUEST);
             if(model.getUploadFileDataModel()!=null){
+                String Folder = model.getType()=="Profile"?UserProfileHelper.Folder.Profile:UserProfileHelper.Folder.Cover;
             try{
-                UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), UserProfileHelper.Folder.Profile, model.getUploadFileDataModel().getBase64Data());
-                model.getUploadFileDataModel().setFolderName(UserProfileHelper.Folder.Profile);
+                UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), Folder, model.getUploadFileDataModel().getBase64Data());
+                model.getUploadFileDataModel().setFolderName(Folder);
                  StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
                     if(fileName.getStatus()!="error"){
-                        model.setProfileImagePath("/Image/"+UserProfileHelper.Folder.Profile+"/"+fileName.getDetail());
+                        model.setProfileImagePath("/Image/"+Folder+"/"+fileName.getDetail());
                     }
             }catch(Exception ex){
                 return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
@@ -74,13 +75,51 @@ public class UserProfileApiController {
             return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+      @PostMapping(UserProfileHelper.URL.UploadCoverImage)
+    public ResponseEntity<?> UploadCoverImage(@RequestBody UserProfileDataModel model ) {
+        try{
+             if(model.getId()<1 || model.getId()==null) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field LoginId is required!"),HttpStatus.BAD_REQUEST);
+             var find = lzUserProfileRepository.findById(model.getId());
+             if(!find.isPresent()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("User profile not found!"),HttpStatus.BAD_REQUEST);
+            if(model.getUploadFileDataModel()!=null){
+            try{
+                UploadFileData upload = new UploadFileData(model.getUploadFileDataModel().getFileName(), model.getUploadFileDataModel().getFileType(), UserProfileHelper.Folder.Cover, model.getUploadFileDataModel().getBase64Data());
+                model.getUploadFileDataModel().setFolderName(UserProfileHelper.Folder.Cover);
+                 StatusMessage fileName = upload.UploadFile(model.getUploadFileDataModel());
+                    if(fileName.getStatus()!="error"){
+                        model.setProfileImagePath("/Image/"+UserProfileHelper.Folder.Cover+"/"+fileName.getDetail());
+                    }
+            }catch(Exception ex){
+                return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+            }
+        }
+        String data = userProfileService.UploadCoverImage(model);
+        return new ResponseEntity<>(data,HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
      @GetMapping(UserProfileHelper.URL.DeleteImage)
     public ResponseEntity<?> DeleteImage(@RequestParam Long Id) {
         try{
             if(Id<1 || Id==null) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field LoginId is required!"),HttpStatus.BAD_REQUEST);
+            // if(Type!="Profile" && Type!="Cover") return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field Type is invalid!"),HttpStatus.BAD_REQUEST);
             var find = lzUserProfileRepository.findById(Id);
              if(!find.isPresent()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("User profile not found!"),HttpStatus.BAD_REQUEST);
               String data = userProfileService.DeleteImage(Id);
+            return new ResponseEntity<>(data,HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping(UserProfileHelper.URL.DeleteImageCover)
+    public ResponseEntity<?> DeleteImageCover(@RequestParam Long Id) {
+        try{
+            if(Id<1 || Id==null) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field LoginId is required!"),HttpStatus.BAD_REQUEST);
+            // if(Type!="Profile" && Type!="Cover") return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("The Field Type is invalid!"),HttpStatus.BAD_REQUEST);
+            var find = lzUserProfileRepository.findById(Id);
+             if(!find.isPresent()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("User profile not found!"),HttpStatus.BAD_REQUEST);
+              String data = userProfileService.DeleteCoverImage(Id);
             return new ResponseEntity<>(data,HttpStatus.OK);
         }catch(Exception ex){
             return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);

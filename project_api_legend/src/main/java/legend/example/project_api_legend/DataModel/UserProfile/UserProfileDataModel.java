@@ -14,6 +14,7 @@ public class UserProfileDataModel extends BaseDataModel {
     private String Name;
     private String EnglishName;
     private String Description;
+    private String Type;
     private String Major;
     private String CareerDescription;
     private String ExperienceDescription;

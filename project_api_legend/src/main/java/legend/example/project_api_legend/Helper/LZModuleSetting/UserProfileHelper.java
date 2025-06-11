@@ -12,7 +12,9 @@ public class UserProfileHelper {
         public static final String UpdateEnglishAddress = "api/user_profile/update_en_address";
         public static final String UpdatePhone = "api/user_profile/update_phone";
         public static final String DeleteImage = "api/user_profile/delete_image";
+        public static final String DeleteImageCover = "api/user_profile/delete_image_cover";
         public static final String UploadImage = "api/user_profile/upload_image";
+        public static final String UploadCoverImage = "api/user_profile/upload_image_cover";
     }
     public static class Folder{
         public static final String Cover = "cover";

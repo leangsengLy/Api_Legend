@@ -13,6 +13,8 @@ public interface UserProfileService {
     String UpdateCareer(String career,Long Id);
     String UpdateCodeProgram(String codeProgram,Long Id);
     String UploadImage(UserProfileDataModel model);
+    String UploadCoverImage(UserProfileDataModel model);
     UserProfileDto getUserByLoginId(Long Id);
     String DeleteImage(Long Id);
+    String DeleteCoverImage(Long Id);
 }

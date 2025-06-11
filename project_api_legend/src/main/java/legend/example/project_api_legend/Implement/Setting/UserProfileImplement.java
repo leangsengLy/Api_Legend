@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
+import legend.example.project_api_legend.Controller.Movie.MovieApiController;
 import legend.example.project_api_legend.Data.UploadFileData;
 import legend.example.project_api_legend.DataModel.UserProfile.UserProfileDataModel;
 import legend.example.project_api_legend.Dto.LZModuleSetting.UserProfileDto;
@@ -18,9 +18,11 @@ import legend.example.project_api_legend.Model.LZUserProfile;
 import legend.example.project_api_legend.Repository.LZUserProfileRepository;
 import legend.example.project_api_legend.Specifications.LZModuleSetting.UserProfileSpecification;
 import lombok.AllArgsConstructor;
+
 @Service
 @AllArgsConstructor
 public class UserProfileImplement implements UserProfileService  {
+
         private LZUserProfileRepository lZUserProfileRepository;
         public UserProfileDto getUserByLoginId(Long loginId) {
            Specification<LZUserProfile> info = Specification.where(UserProfileSpecification.GetDataByLoginId(loginId));
@@ -50,6 +52,12 @@ public class UserProfileImplement implements UserProfileService  {
             lZUserProfileRepository.save(data);
             return data.getPROFILE_IMG_PATH();
         }
+           public String UploadCoverImage(UserProfileDataModel model){
+             var data = lZUserProfileRepository.findById(model.getId()).get();
+            data.setCV_IMG_PATH(model.getProfileImagePath());
+            lZUserProfileRepository.save(data);
+            return data.getCV_IMG_PATH();
+        }
         public String DeleteImage(Long Id){
             var profile = lZUserProfileRepository.findById(Id).get();
             if(profile.getPROFILE_IMG_PATH()!=""){
@@ -57,10 +65,22 @@ public class UserProfileImplement implements UserProfileService  {
                 Integer LastIndex = fileName.size()-1;
                 UploadFileData.deleteImage(fileName.get(LastIndex), UserProfileHelper.Folder.Profile);
             }
-              profile.setPROFILE_IMG_PATH(null);
+            profile.setPROFILE_IMG_PATH(null);
               lZUserProfileRepository.save(profile);
             return "Delete image successfuly";
         }
+           public String DeleteCoverImage(Long Id){
+            var profile = lZUserProfileRepository.findById(Id).get();
+            if(profile.getCV_IMG_PATH()!=""){
+                List<String> fileName = Arrays.asList(profile.getCV_IMG_PATH().split("/"));
+                Integer LastIndex = fileName.size()-1;
+                UploadFileData.deleteImage(fileName.get(LastIndex), UserProfileHelper.Folder.Cover);
+            }
+            profile.setCV_IMG_PATH(null);
+              lZUserProfileRepository.save(profile);
+            return "Delete image successfuly";
+        }
+       
         public String UpdateName(String name,Long Id) {
            var data = lZUserProfileRepository.findById(Id).get();
            data.setNAME(name);
