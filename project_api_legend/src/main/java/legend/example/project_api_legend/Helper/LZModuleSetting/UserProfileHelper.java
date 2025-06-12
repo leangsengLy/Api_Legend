@@ -18,6 +18,6 @@ public class UserProfileHelper {
     }
     public static class Folder{
         public static final String Cover = "cover";
-        public static final String Profile = "profile";
+        public static final String Profile = "profile"; 
     }
 }
