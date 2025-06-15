@@ -6,8 +6,10 @@ import lombok.Setter;
 
 @Setter
 @NoArgsConstructor
-public class CountryDto extends BaseDto {
+public class DistrictDto extends BaseDto {
     public Long Id;
+    public Long CountryId;
+    public Long ProvinceId;
     public String Code;
     public String Name;
     public String EnglishName;

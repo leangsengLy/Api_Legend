@@ -9,7 +9,6 @@ import legend.example.project_api_legend.Dto.Food.FoodDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.GlobalHelper.StatusMessage;
 import legend.example.project_api_legend.Helper.Food.FoodHelper;
-import legend.example.project_api_legend.Helper.Setting.MovieHelper;
 import legend.example.project_api_legend.Interface.FoodService;
 import legend.example.project_api_legend.Model.LZCinema;
 import legend.example.project_api_legend.Model.LZFood;

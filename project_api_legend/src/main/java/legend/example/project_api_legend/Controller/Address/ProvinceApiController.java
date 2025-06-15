@@ -13,14 +13,15 @@ import legend.example.project_api_legend.DataModel.Address.Province.ProvinceFilt
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Helper.Address.ProvinceHelper;
 import legend.example.project_api_legend.Interface.Address.ProvinceService;
+import legend.example.project_api_legend.Repository.Address.LZCountryRepository;
 import legend.example.project_api_legend.Repository.Address.LZProvinceRepository;
 import lombok.AllArgsConstructor;
-import java.util.*;
 @RestController
 @AllArgsConstructor
 public class ProvinceApiController {
-    private ProvinceService provinceService;
     private LZProvinceRepository lzProvinceRepository;
+    private ProvinceService provinceService;
+    private LZCountryRepository lzCountryRepository;
     @PostMapping(ProvinceHelper.Url.List)
     public ResponseEntity<?> List(@RequestBody ProvinceFilterDataModel filter){
         try{
@@ -38,6 +39,9 @@ public class ProvinceApiController {
             if(model.getName()=="" || model.getName()==null) msg ="name";
             else if(model.getCreateBy()=="" || model.getCreateBy()==null) msg ="Username";
             else if(model.getDatabase()=="" || model.getDatabase()==null) msg ="database";
+            else if(model.getCountryId() < 1 || model.getCountryId()==null) msg ="countryId";
+             var findCountry = lzCountryRepository.findById(model.getCountryId());
+            if(!findCountry.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Country not found!"),HttpStatus.NOT_FOUND);
             if(msg!="") return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Field ("+msg+") is required"),HttpStatus.BAD_REQUEST);
             var data = provinceService.Create(model);
             return new ResponseEntity<>(data,HttpStatus.OK);
@@ -53,9 +57,12 @@ public class ProvinceApiController {
             else if(model.getCreateBy().isEmpty() || model.getCreateBy()==null) msg ="Username";
             else if(model.getDatabase().isEmpty() || model.getDatabase()==null) msg ="database";
             else if(model.getId()<1 || model.getId()==null) msg ="id";
+             else if(model.getCountryId() < 1 || model.getCountryId()==null) msg ="countryId";
             if(!msg.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Field ("+msg+") is required"),HttpStatus.BAD_REQUEST);
             var find = lzProvinceRepository.findById(model.getId());
             if(!find.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Province not found!"),HttpStatus.NOT_FOUND);
+            var findCountry = lzCountryRepository.findById(model.getCountryId());
+            if(!findCountry.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Country not found!"),HttpStatus.NOT_FOUND);
             var data = provinceService.Update(model);
             return new ResponseEntity<>(data,HttpStatus.OK);
         }catch(Exception ex){

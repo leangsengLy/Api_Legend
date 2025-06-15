@@ -2,7 +2,6 @@ package legend.example.project_api_legend.Model;
 
 import java.util.Date;
 
-import org.hibernate.annotations.Columns;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

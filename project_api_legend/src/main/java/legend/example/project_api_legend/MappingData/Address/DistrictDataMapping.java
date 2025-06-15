@@ -1,29 +1,33 @@
 package legend.example.project_api_legend.MappingData.Address;
 
-import legend.example.project_api_legend.DataModel.Address.Province.ProvinceDataModel;
-import legend.example.project_api_legend.Dto.Address.ProvinceDto;
-import legend.example.project_api_legend.Model.Address.LZProvince;
+import legend.example.project_api_legend.DataModel.Address.District.DistrictDataModel;
+import legend.example.project_api_legend.Dto.Address.DistrictDto;
+import legend.example.project_api_legend.Model.Address.LZDistrict;
 
-public class ProvinceDataMapping {
-    public static ProvinceDto MappingToDto (LZProvince model,int recordCount){
-        var data = new ProvinceDto();
+public class DistrictDataMapping {
+    public static DistrictDto MappingToDto (LZDistrict model,int recordCount){
+        var data = new DistrictDto();
+        data.setCode(model.getCode());
         data.setId(model.getId());
+        data.setCountryId(model.getCountryId());
+        data.setProvinceId(model.getProvinceId());
         data.setName(model.getName());
         data.setEnglishName(model.getEnglishName());
         data.setCreateBy(model.getCreatedBy());
         data.setUpdateBy(model.getUpdatedBy());
         data.setUpdateDate(model.getUpdatedDate());
         data.setRecordCount(recordCount);
-        data.setCountryId(model.getCountryId());
         data.setCreateDate(model.getCreatedDate());
         data.setDatabase(model.getDatabase());
         return data;
     }
-    public static LZProvince MappingToTable (ProvinceDataModel model){
-        var data = new LZProvince();
+    public static LZDistrict MappingToTable (DistrictDataModel model){
+        var data = new LZDistrict();
+        data.setCode(model.getCode());
         data.setId(model.getId());
-        data.setName(model.getName());
         data.setCountryId(model.getCountryId());
+        data.setProvinceId(model.getProvinceId());
+        data.setName(model.getName());
         data.setEnglishName(model.getEnglishName());
         data.setCreatedBy(model.getCreateBy());
         data.setUpdatedBy(model.getUpdateBy());

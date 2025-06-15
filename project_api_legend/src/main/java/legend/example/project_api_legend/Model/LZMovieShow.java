@@ -1,6 +1,5 @@
 package legend.example.project_api_legend.Model;
 
-import java.time.LocalTime;
 import java.util.Date;
 
 import jakarta.persistence.Column;

@@ -1,7 +1,6 @@
 package legend.example.project_api_legend.Specifications;
 
 import org.springframework.data.jpa.domain.Specification;
-import legend.example.project_api_legend.DataModel.Offer.OfferFilterDataModel;
 import legend.example.project_api_legend.Model.LZOffer;
 
 public class OfferSpecification {

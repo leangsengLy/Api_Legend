@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import legend.example.project_api_legend.Model.Address.LZCountry;
+import legend.example.project_api_legend.Model.Address.LZDistrict;
 @Repository
-public interface LZCountryRepository extends JpaRepository<LZCountry,Long>,JpaSpecificationExecutor<LZCountry> {
+public interface LZDistrictRepository extends JpaRepository<LZDistrict,Long>,JpaSpecificationExecutor<LZDistrict> {
 }

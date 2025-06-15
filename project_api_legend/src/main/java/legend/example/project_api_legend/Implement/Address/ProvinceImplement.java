@@ -15,13 +15,11 @@ import legend.example.project_api_legend.MappingData.Address.ProvinceDataMapping
 import legend.example.project_api_legend.Repository.Address.LZProvinceRepository;
 import legend.example.project_api_legend.Specifications.Address.ProvinceSpecification;
 import lombok.AllArgsConstructor;
-import lombok.var;
 
 import java.util.*;
 @AllArgsConstructor
 @Service
 public class ProvinceImplement implements ProvinceService {
-    @Autowired
     private LZProvinceRepository lzProvinceRepository;
      @Override
     public List<ProvinceDto> List(ProvinceFilterDataModel filter) {

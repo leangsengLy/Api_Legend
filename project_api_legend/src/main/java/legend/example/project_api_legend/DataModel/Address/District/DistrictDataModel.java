@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.DataModel.Address.Province;
+package legend.example.project_api_legend.DataModel.Address.District;
 
 import legend.example.project_api_legend.DataModel.BaseDataModel;
 import lombok.AllArgsConstructor;
@@ -10,9 +10,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProvinceDataModel extends BaseDataModel{
+public class DistrictDataModel extends BaseDataModel{
     private Long Id;
-    private String EnglishName; 
-    private Long CountryId; 
+    private String Code;
+    private Long CountryId;
+    private Long ProvinceId;
     private String Name;
+    private String EnglishName; 
 }

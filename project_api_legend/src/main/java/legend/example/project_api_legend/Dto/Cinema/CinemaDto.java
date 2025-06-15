@@ -3,8 +3,6 @@ package legend.example.project_api_legend.Dto.Cinema;
 import java.time.LocalTime;
 import java.util.Date;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 

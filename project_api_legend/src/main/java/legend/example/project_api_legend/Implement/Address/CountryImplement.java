@@ -17,11 +17,10 @@ import legend.example.project_api_legend.Model.Address.LZCountry;
 import legend.example.project_api_legend.Repository.Address.LZCountryRepository;
 import legend.example.project_api_legend.Specifications.Address.CountrySpecification;
 import lombok.AllArgsConstructor;
-import lombok.var;
 
 import java.util.*;
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class CountryImplement implements CountryService {
     private LZCountryRepository lzCountryRepository;
      @Override

@@ -5,12 +5,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import legend.example.project_api_legend.Controller.Movie.MovieApiController;
 import legend.example.project_api_legend.Data.UploadFileData;
 import legend.example.project_api_legend.DataModel.UserProfile.UserProfileDataModel;
 import legend.example.project_api_legend.Dto.Setting.UserProfileDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
-import legend.example.project_api_legend.Helper.Food.FoodHelper;
 import legend.example.project_api_legend.Helper.Setting.UserProfileHelper;
 import legend.example.project_api_legend.Interface.UserProfileService;
 import legend.example.project_api_legend.MappingData.Setting.UserProfileMapping;
