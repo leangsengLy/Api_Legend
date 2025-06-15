@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Helper.LZModuleCinema;
+package legend.example.project_api_legend.Helper.Cinema;
 
 
 public class CinemaHelper {

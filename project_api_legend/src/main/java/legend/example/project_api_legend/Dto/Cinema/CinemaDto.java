@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Dto.LZModuleCinema;
+package legend.example.project_api_legend.Dto.Cinema;
 
 import java.time.LocalTime;
 import java.util.Date;

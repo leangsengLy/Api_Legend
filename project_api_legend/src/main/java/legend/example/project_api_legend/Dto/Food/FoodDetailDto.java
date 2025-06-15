@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Dto.LZModuleFood;
+package legend.example.project_api_legend.Dto.Food;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

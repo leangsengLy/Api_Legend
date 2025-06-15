@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Helper.LoginHelper;
+package legend.example.project_api_legend.Helper.Login;
 
 import legend.example.project_api_legend.GlobalHelper.StatusMessage;
 

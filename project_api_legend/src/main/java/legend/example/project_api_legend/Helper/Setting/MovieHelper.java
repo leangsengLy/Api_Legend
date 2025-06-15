@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Helper.LZModuleSetting;
+package legend.example.project_api_legend.Helper.Setting;
 
 public class MovieHelper {
     public static class Text{

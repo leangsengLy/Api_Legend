@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Helper.LZModuleFood;
+package legend.example.project_api_legend.Helper.Food;
 
 
 public class FoodHelper {

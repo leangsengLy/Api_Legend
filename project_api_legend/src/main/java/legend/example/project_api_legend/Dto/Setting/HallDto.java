@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Dto.LZModuleSetting;
+package legend.example.project_api_legend.Dto.Setting;
 
 import legend.example.project_api_legend.Dto.GlobalDto.BaseDto;
 import lombok.NoArgsConstructor;
