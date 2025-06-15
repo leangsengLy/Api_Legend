@@ -1,5 +1,8 @@
 package legend.example.project_api_legend.Implement.Address;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import legend.example.project_api_legend.Data.UploadFileData;
@@ -12,6 +15,7 @@ import legend.example.project_api_legend.Interface.Address.CountryService;
 import legend.example.project_api_legend.MappingData.Address.CountryDataMapping;
 import legend.example.project_api_legend.Model.Address.LZCountry;
 import legend.example.project_api_legend.Repository.Address.LZCountryRepository;
+import legend.example.project_api_legend.Specifications.Address.CountrySpecification;
 import lombok.AllArgsConstructor;
 import lombok.var;
 
@@ -22,15 +26,21 @@ public class CountryImplement implements CountryService {
     private LZCountryRepository lzCountryRepository;
      @Override
     public List<CountryDto> List(CountryFilterDataModel filter) {
-        // TODO Auto-generated method stub
-        return null;
+        var spec = Specification.where(CountrySpecification.SearchFood(filter.getSearch()));
+         Sort sort = Sort.by(Direction.DESC, "id");
+         var list = lzCountryRepository.findAll(spec,sort);
+        if(filter.getRecords()>0 && filter.getPages()>0){
+            var  datas = list.stream().skip((filter.getPages() - 1 )* filter.getRecords()).limit(filter.getRecords()).toList();
+            return datas.stream().map(s->CountryDataMapping.MappingToDto(s, datas.size())).toList();
+        }
+        return list.stream().map(s->CountryDataMapping.MappingToDto(s, list.size())).toList();
     }
     @Override
     public CountryDto Create(CountryDataModel model) {
        model.setCreateDate(LZGlobalHelper.LZDate.DateNow);
        var dt = CountryDataMapping.MappingToTable(model);
        var data = lzCountryRepository.save(dt);
-    return CountryDataMapping.MappingToDto(data, 1);
+        return CountryDataMapping.MappingToDto(data, 1);
     }
      @Override
     public CountryDto Update(CountryDataModel model) {

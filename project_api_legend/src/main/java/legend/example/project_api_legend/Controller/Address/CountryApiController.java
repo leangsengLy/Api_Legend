@@ -28,8 +28,8 @@ public class CountryApiController {
     @PostMapping(CountryHelper.Url.List)
     public ResponseEntity<?> List(@RequestBody CountryFilterDataModel filter){
         try{
-
-                return new ResponseEntity<>(true,HttpStatus.OK);
+                var list = countryService.List(filter);
+                return new ResponseEntity<>(list,HttpStatus.OK);
         }catch(Exception ex){
             return new ResponseEntity<>(LZGlobalHelper.Message.SomethingWentWrong.setDetail(ex.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
