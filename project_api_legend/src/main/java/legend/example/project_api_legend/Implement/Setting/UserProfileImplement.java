@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 import legend.example.project_api_legend.Controller.Movie.MovieApiController;
 import legend.example.project_api_legend.Data.UploadFileData;
 import legend.example.project_api_legend.DataModel.UserProfile.UserProfileDataModel;
-import legend.example.project_api_legend.Dto.LZModuleSetting.UserProfileDto;
+import legend.example.project_api_legend.Dto.Setting.UserProfileDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
-import legend.example.project_api_legend.Helper.LZModuleFood.FoodHelper;
-import legend.example.project_api_legend.Helper.LZModuleSetting.UserProfileHelper;
+import legend.example.project_api_legend.Helper.Food.FoodHelper;
+import legend.example.project_api_legend.Helper.Setting.UserProfileHelper;
 import legend.example.project_api_legend.Interface.UserProfileService;
-import legend.example.project_api_legend.MappingData.LZModuleSetting.UserProfileMapping;
+import legend.example.project_api_legend.MappingData.Setting.UserProfileMapping;
 import legend.example.project_api_legend.Model.LZUserProfile;
 import legend.example.project_api_legend.Repository.LZUserProfileRepository;
-import legend.example.project_api_legend.Specifications.LZModuleSetting.UserProfileSpecification;
+import legend.example.project_api_legend.Specifications.Setting.UserProfileSpecification;
 import lombok.AllArgsConstructor;
 
 @Service

@@ -2,7 +2,7 @@ package legend.example.project_api_legend.Controller;
 import legend.example.project_api_legend.DataModel.Hall.HallDataModel;
 import legend.example.project_api_legend.DataModel.Hall.HallFilterDataModel;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
-import legend.example.project_api_legend.Helper.LZModuleSetting.HallHelper;
+import legend.example.project_api_legend.Helper.Setting.HallHelper;
 import legend.example.project_api_legend.Interface.HallService;
 import legend.example.project_api_legend.Repository.LZHallRepository;
 

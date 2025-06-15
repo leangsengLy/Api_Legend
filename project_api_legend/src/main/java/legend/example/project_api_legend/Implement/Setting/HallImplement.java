@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import legend.example.project_api_legend.DataModel.Hall.HallDataModel;
 import legend.example.project_api_legend.DataModel.Hall.HallFilterDataModel;
-import legend.example.project_api_legend.Dto.LZModuleSetting.HallDto;
+import legend.example.project_api_legend.Dto.Setting.HallDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Interface.HallService;
-import legend.example.project_api_legend.MappingData.LZModuleSetting.HallMapping;
+import legend.example.project_api_legend.MappingData.Setting.HallMapping;
 import legend.example.project_api_legend.Model.LZHall;
 import legend.example.project_api_legend.Repository.LZHallRepository;
-import legend.example.project_api_legend.Specifications.LZModuleSetting.HallSpecification;
+import legend.example.project_api_legend.Specifications.Setting.HallSpecification;
 import lombok.AllArgsConstructor;
 
 @Service

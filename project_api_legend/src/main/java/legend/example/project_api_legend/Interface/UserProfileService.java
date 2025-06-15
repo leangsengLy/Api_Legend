@@ -1,7 +1,7 @@
 package legend.example.project_api_legend.Interface;
 
 import legend.example.project_api_legend.DataModel.UserProfile.UserProfileDataModel;
-import legend.example.project_api_legend.Dto.LZModuleSetting.UserProfileDto;
+import legend.example.project_api_legend.Dto.Setting.UserProfileDto;
 
 public interface UserProfileService {
     // UserProfileDto getUserProfileInfo(String loginId);

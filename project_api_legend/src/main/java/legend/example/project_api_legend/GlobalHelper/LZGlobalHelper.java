@@ -6,7 +6,7 @@ import java.util.Date;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import legend.example.project_api_legend.Helper.LZModuleSetting.MovieTypeHelper;
+import legend.example.project_api_legend.Helper.Setting.MovieTypeHelper;
 
 public class LZGlobalHelper {
     public static class Text {

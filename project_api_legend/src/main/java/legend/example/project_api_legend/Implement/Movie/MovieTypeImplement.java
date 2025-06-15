@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeDataModel;
 import legend.example.project_api_legend.DataModel.Movie.MovieType.MovieTypeFilterDataMode;
-import legend.example.project_api_legend.Dto.LZModuleSetting.MovieTypeDto;
+import legend.example.project_api_legend.Dto.Setting.MovieTypeDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
 import legend.example.project_api_legend.Interface.MovieTypeService;
 import legend.example.project_api_legend.MappingData.MovieTypeMap;

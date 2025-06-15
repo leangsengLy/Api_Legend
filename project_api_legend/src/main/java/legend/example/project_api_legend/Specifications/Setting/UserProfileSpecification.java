@@ -1,4 +1,4 @@
-package legend.example.project_api_legend.Specifications.LZModuleSetting;
+package legend.example.project_api_legend.Specifications.Setting;
 
 import org.springframework.data.jpa.domain.Specification;
 

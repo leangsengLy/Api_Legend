@@ -1,6 +1,9 @@
 package legend.example.project_api_legend.Helper.Address;
 
 public class CountryHelper {
+    public static class StrText{
+        public static final String folderCountry = "country";
+    }
     public static class Url {
         public static final String List = "api/country/list";
         public static final String Create = "api/country/create";

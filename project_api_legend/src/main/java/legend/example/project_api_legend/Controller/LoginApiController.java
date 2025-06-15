@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 import legend.example.project_api_legend.DataModel.Login.LoginDataModel;
 import legend.example.project_api_legend.Dto.LoginDto;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
-import legend.example.project_api_legend.Helper.LoginHelper.LoginHelper;
+import legend.example.project_api_legend.Helper.Login.LoginHelper;
 import legend.example.project_api_legend.Interface.LoginService;
 import legend.example.project_api_legend.MappingData.LoginDataMapping;
 import legend.example.project_api_legend.Model.Login;

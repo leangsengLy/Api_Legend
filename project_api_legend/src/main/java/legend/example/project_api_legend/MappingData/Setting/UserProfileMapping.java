@@ -1,6 +1,6 @@
-package legend.example.project_api_legend.MappingData.LZModuleSetting;
+package legend.example.project_api_legend.MappingData.Setting;
 
-import legend.example.project_api_legend.Dto.LZModuleSetting.UserProfileDto;
+import legend.example.project_api_legend.Dto.Setting.UserProfileDto;
 import legend.example.project_api_legend.Model.LZUserProfile;
 
 public class UserProfileMapping {

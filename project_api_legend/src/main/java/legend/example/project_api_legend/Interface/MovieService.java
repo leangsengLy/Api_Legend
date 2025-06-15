@@ -4,7 +4,7 @@ import java.util.List;
 
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieDataModel;
 import legend.example.project_api_legend.DataModel.Movie.Movie.MovieFilterDataModel;
-import legend.example.project_api_legend.Dto.LZModuleSetting.MovieDto;
+import legend.example.project_api_legend.Dto.Setting.MovieDto;
 
 public interface MovieService {
     List<MovieDto> List(MovieFilterDataModel filter);

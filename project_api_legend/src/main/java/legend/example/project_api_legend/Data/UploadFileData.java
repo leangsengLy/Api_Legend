@@ -9,8 +9,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import legend.example.project_api_legend.DataModel.UploadFileDataModel;
 import legend.example.project_api_legend.GlobalHelper.LZGlobalHelper;
@@ -78,5 +80,10 @@ public class UploadFileData {
         } catch (Exception e) {
             return "Error deleting file: " + e.getMessage();
         }
+    }
+    public static String getFileNameByPath(String path){
+        List<String> fileName = Arrays.asList(path.split("/"));
+        int size = Arrays.asList(path.split("/")).size();
+        return fileName.get(size-1);
     }
 }

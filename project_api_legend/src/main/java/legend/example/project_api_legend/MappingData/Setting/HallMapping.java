@@ -1,7 +1,7 @@
-package legend.example.project_api_legend.MappingData.LZModuleSetting;
+package legend.example.project_api_legend.MappingData.Setting;
 
 import legend.example.project_api_legend.DataModel.Hall.HallDataModel;
-import legend.example.project_api_legend.Dto.LZModuleSetting.HallDto;
+import legend.example.project_api_legend.Dto.Setting.HallDto;
 import legend.example.project_api_legend.Model.LZHall;
 
 public class HallMapping {

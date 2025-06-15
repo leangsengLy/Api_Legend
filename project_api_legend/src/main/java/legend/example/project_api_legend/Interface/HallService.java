@@ -3,7 +3,7 @@ import java.util.*;
 
 import legend.example.project_api_legend.DataModel.Hall.HallDataModel;
 import legend.example.project_api_legend.DataModel.Hall.HallFilterDataModel;
-import legend.example.project_api_legend.Dto.LZModuleSetting.HallDto;
+import legend.example.project_api_legend.Dto.Setting.HallDto;
 
 public interface HallService {
     List<HallDto> List(HallFilterDataModel filter);
