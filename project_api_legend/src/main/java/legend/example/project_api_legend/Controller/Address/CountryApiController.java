@@ -114,7 +114,7 @@ public class CountryApiController {
                 if(id<1) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Field id is required"),HttpStatus.BAD_REQUEST); 
                 var find = lzCountryRepository.findById(id);
                 if(!find.isPresent()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Country not found!"),HttpStatus.NOT_FOUND);
-                if(find.get().getImagePath()!="") UploadFileData.deleteImage(UploadFileData.getFileNameByPath(find.get().getImagePath()), CountryHelper.StrText.folderCountry);
+                if(find.get().getImagePath()!="" && find.get().getImagePath()!=null) UploadFileData.deleteImage(UploadFileData.getFileNameByPath(find.get().getImagePath()), CountryHelper.StrText.folderCountry);
                 var isSussess = countryService.Delete(id);
                 return new ResponseEntity<>(isSussess,HttpStatus.OK);
         }catch(Exception ex){

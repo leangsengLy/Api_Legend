@@ -11,4 +11,5 @@ public class CountryDto extends BaseDto {
     public String Code;
     public String Name;
     public String EnglishName;
+    public String ImagePath;
 }

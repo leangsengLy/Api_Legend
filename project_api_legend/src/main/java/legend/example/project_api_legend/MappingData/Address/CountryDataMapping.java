@@ -17,6 +17,7 @@ public class CountryDataMapping {
         data.setRecordCount(recordCount);
         data.setCreateDate(model.getCreatedDate());
         data.setDatabase(model.getDatabase());
+        data.setImagePath(model.getImagePath());
         return data;
     }
     public static LZCountry MappingToTable (CountryDataModel model){
