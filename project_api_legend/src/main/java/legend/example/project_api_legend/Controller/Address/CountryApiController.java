@@ -72,7 +72,7 @@ public class CountryApiController {
             else if(model.getDatabase().isEmpty() || model.getDatabase()==null) msg ="database";
             else if(model.getId()<1 || model.getId()==null) msg ="id";
             if(!msg.isEmpty()) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Field ("+msg+") is required"),HttpStatus.BAD_REQUEST);
-             boolean isExistedCode = countryService.CheckCode(model.getCode(), 0L, model.getDatabase());
+             boolean isExistedCode = countryService.CheckCode(model.getCode(), model.getId(), model.getDatabase());
             if(isExistedCode) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Code already existed"),HttpStatus.NOT_FOUND);
             var find = lzCountryRepository.findById(model.getId());
             if(!find.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Country not found!"),HttpStatus.NOT_FOUND);

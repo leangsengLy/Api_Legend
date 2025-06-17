@@ -28,7 +28,7 @@ public class ProvinceImplement implements ProvinceService {
          var list = lzProvinceRepository.findAll(spec,sort);
         if(filter.getRecords()>0 && filter.getPages()>0){
             var  datas = list.stream().skip((filter.getPages() - 1 )* filter.getRecords()).limit(filter.getRecords()).toList();
-            return datas.stream().map(s->ProvinceDataMapping.MappingToDto(s, datas.size())).toList();
+            return datas.stream().map(s->ProvinceDataMapping.MappingToDto(s, list.size())).toList();
         }
         return list.stream().map(s->ProvinceDataMapping.MappingToDto(s, list.size())).toList();
     }
