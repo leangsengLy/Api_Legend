@@ -14,4 +14,9 @@ public class ProvinceSpecification {
                 );
         };
     }
+    public static Specification<LZProvince> GetByCountryId(Long countryId){
+        return (root,query,cb)->{
+            return cb.equal(root.get("CountryId"), countryId);
+        };
+    }
 }

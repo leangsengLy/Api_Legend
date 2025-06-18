@@ -25,6 +25,9 @@ public class ProvinceImplement implements ProvinceService {
     public List<ProvinceDto> List(ProvinceFilterDataModel filter) {
         var spec = Specification.where(ProvinceSpecification.SearchProvince(filter.getSearch()));
          Sort sort = Sort.by(Direction.DESC, "id");
+         if(filter.getCountryId()!=null && filter.getCountryId()>0 ){
+            spec = spec.and(ProvinceSpecification.GetByCountryId(filter.getCountryId()));
+         }
          var list = lzProvinceRepository.findAll(spec,sort);
         if(filter.getRecords()>0 && filter.getPages()>0){
             var  datas = list.stream().skip((filter.getPages() - 1 )* filter.getRecords()).limit(filter.getRecords()).toList();

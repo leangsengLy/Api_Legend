@@ -12,4 +12,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProvinceFilterDataModel extends BaseFilterDataModel{
     public Long Id;
+    public Long CountryId;
 }
