@@ -12,4 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DistrictFilterDataModel extends BaseFilterDataModel{
     public Long Id;
+    public Long CountryId;
+    public Long ProvinceId;
 }

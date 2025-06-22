@@ -75,7 +75,7 @@ public class DistrictApiController {
             if(!findDistrict.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("District not found!"),HttpStatus.NOT_FOUND);
             var findPro = lzProvinceRepository.findById(model.getProvinceId());
             if(!findPro.isPresent())return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Province not found!"),HttpStatus.NOT_FOUND);
-             boolean isExistedCode = districtService.CheckCode(model.getCode(), 0L, model.getDatabase());
+             boolean isExistedCode = districtService.CheckCode(model.getCode(), model.getId(), model.getDatabase());
             if(isExistedCode) return new ResponseEntity<>(LZGlobalHelper.Message.DataInvalid.setDetail("Code already existed"),HttpStatus.NOT_FOUND);
             var data = districtService.Update(model);
             return new ResponseEntity<>(data,HttpStatus.OK);

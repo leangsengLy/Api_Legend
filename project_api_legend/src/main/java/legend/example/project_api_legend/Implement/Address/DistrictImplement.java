@@ -23,7 +23,7 @@ public class DistrictImplement implements DistrictService {
     private LZDistrictRepository lzDistrictRepository;
      @Override
     public List<DistrictDto> List(DistrictFilterDataModel filter) {
-        var spec = Specification.where(DistrictSpecification.Search(filter.getSearch()));
+        var spec = Specification.where(DistrictSpecification.Search(filter.getSearch())).and(DistrictSpecification.getFilterByProvinceAndCountry(filter));
          Sort sort = Sort.by(Direction.DESC, "id");
          var list = lzDistrictRepository.findAll(spec,sort);
         if(filter.getRecords()>0 && filter.getPages()>0){
