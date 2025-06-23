@@ -26,11 +26,12 @@ public class DistrictImplement implements DistrictService {
         var spec = Specification.where(DistrictSpecification.Search(filter.getSearch())).and(DistrictSpecification.getFilterByProvinceAndCountry(filter));
          Sort sort = Sort.by(Direction.DESC, "id");
          var list = lzDistrictRepository.findAll(spec,sort);
+         var record = list.size();
         if(filter.getRecords()>0 && filter.getPages()>0){
             var  datas = list.stream().skip((filter.getPages() - 1 )* filter.getRecords()).limit(filter.getRecords()).toList();
-            return datas.stream().map(s->DistrictDataMapping.MappingToDto(s, datas.size())).toList();
+            return datas.stream().map(s->DistrictDataMapping.MappingToDto(s, record)).toList();
         }
-        return list.stream().map(s->DistrictDataMapping.MappingToDto(s, list.size())).toList();
+        return list.stream().map(s->DistrictDataMapping.MappingToDto(s, record)).toList();
     }
     @Override
     public DistrictDto Create(DistrictDataModel model) {
