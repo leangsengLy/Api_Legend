@@ -14,4 +14,14 @@ public class CommuneSpecification {
                 );
         };
     }
+     public static Specification<LZCommune> getFilterByDistrict(Long Id){
+        return (root,query,cb)->{
+            if(Id<1) {
+                return cb.conjunction();
+            }
+            return cb.and(
+                    cb.equal(root.get("DistrictId"), Id)
+                );
+        };
+    }
 }

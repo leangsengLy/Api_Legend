@@ -12,4 +12,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CommuneFilterDataModel extends BaseFilterDataModel{
     public Long Id;
+    public Long DistrictId;
 }
